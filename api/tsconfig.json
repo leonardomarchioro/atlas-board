@@ -13,6 +13,10 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
+    "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@modules/*": ["src/modules/*"],
+    },
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
