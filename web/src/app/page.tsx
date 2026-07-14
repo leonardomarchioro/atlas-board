@@ -1,37 +1,27 @@
-import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import type { Metadata } from "next";
 
-export default function Home() {
+import { FeaturesSection } from "@/components/home/features-section";
+import { HeroSection } from "@/components/home/hero-section";
+import { HomeFooter } from "@/components/home/home-footer";
+import { HomeHeader } from "@/components/home/home-header";
+
+export const metadata: Metadata = {
+  title: "Organize projetos e equipes",
+  description:
+    "Organize projetos, colabore em tempo real e mantenha sua equipe focada com o Atlas.",
+};
+
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-muted/40 p-6">
-      <Card className="w-full max-w-lg border-border/70 shadow-sm">
-        <CardHeader className="flex-row items-start justify-between gap-4">
-          <div className="space-y-1.5">
-            <CardTitle className="text-3xl text-primary">Atlas</CardTitle>
-            <CardDescription>
-              Plataforma colaborativa para organizar boards e tarefas.
-            </CardDescription>
-          </div>
-          <ThemeToggle />
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm leading-6 text-muted-foreground">
-            O frontend foi configurado e está pronto para as próximas etapas de
-            desenvolvimento.
-          </p>
-        </CardContent>
-        <CardFooter>
-          <Button>Setup concluído</Button>
-        </CardFooter>
-      </Card>
-    </main>
+    <div className="flex min-h-screen flex-col bg-background">
+      <HomeHeader />
+      <main className="flex-1 px-4 pb-20 pt-32 md:px-8">
+        <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+          <HeroSection />
+          <FeaturesSection />
+        </div>
+      </main>
+      <HomeFooter />
+    </div>
   );
 }
