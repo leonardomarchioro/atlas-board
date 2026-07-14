@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { AuthModule } from "@modules/auth/auth.module";
+import { BoardsModule } from "@modules/boards/boards.module";
 import { UsersModule } from "@modules/users/users.module";
 import { PrismaModule } from "@shared/database/prisma.module";
 
@@ -33,6 +34,7 @@ function validateEnvironment(
     PrismaModule,
     UsersModule,
     AuthModule,
+    BoardsModule,
   ],
   controllers: [],
   providers: [],

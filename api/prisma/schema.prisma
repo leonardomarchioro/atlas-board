@@ -22,8 +22,79 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   refreshTokens RefreshToken[]
+  createdBoards Board[]        @relation("BoardCreatedBy")
+  boardMembers  BoardMember[]
 
   @@map("users")
+}
+
+enum BoardRole {
+  ADMIN
+  COLLABORATOR
+}
+
+enum BoardMemberStatus {
+  PENDING
+  ACTIVE
+}
+
+model Board {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  createdById String  @map("created_by_id")
+
+  createdBy User          @relation("BoardCreatedBy", fields: [createdById], references: [id])
+  members   BoardMember[]
+  columns   BoardColumn[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([createdById])
+  @@map("boards")
+}
+
+model BoardMember {
+  id      String  @id @default(uuid())
+  boardId String  @map("board_id")
+  userId  String? @map("user_id")
+  email   String
+
+  role   BoardRole         @default(COLLABORATOR)
+  status BoardMemberStatus @default(PENDING)
+
+  inviteToken     String?   @unique @map("invite_token")
+  inviteExpiresAt DateTime? @map("invite_expires_at")
+  acceptedAt      DateTime? @map("accepted_at")
+
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  user  User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([boardId, email])
+  @@index([boardId])
+  @@index([userId])
+  @@index([status])
+  @@map("board_members")
+}
+
+model BoardColumn {
+  id       String @id @default(uuid())
+  boardId  String @map("board_id")
+  name     String
+  position Int
+
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([boardId, position])
+  @@index([boardId])
+  @@map("board_columns")
 }
 
 model RefreshToken {
