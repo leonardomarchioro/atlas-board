@@ -4,6 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "@modules/auth/auth.module";
 import { BoardsModule } from "@modules/boards/boards.module";
 import { UsersModule } from "@modules/users/users.module";
+import { TasksModule } from "@modules/tasks/tasks.module";
 import { PrismaModule } from "@shared/database/prisma.module";
 
 const requiredEnvironmentVariables = [
@@ -35,6 +36,7 @@ function validateEnvironment(
     UsersModule,
     AuthModule,
     BoardsModule,
+    TasksModule,
   ],
   controllers: [],
   providers: [],

@@ -22,8 +22,11 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   refreshTokens RefreshToken[]
-  createdBoards Board[]        @relation("BoardCreatedBy")
+  createdBoards Board[]          @relation("BoardCreatedBy")
   boardMembers  BoardMember[]
+  assignedTasks Task[]           @relation("TaskAssignee")
+  createdTasks  Task[]           @relation("TaskCreatedBy")
+  sharedTasks   TaskSharedUser[]
 
   @@map("users")
 }
@@ -38,6 +41,12 @@ enum BoardMemberStatus {
   ACTIVE
 }
 
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
 model Board {
   id          String  @id @default(uuid())
   name        String
@@ -47,6 +56,8 @@ model Board {
   createdBy User          @relation("BoardCreatedBy", fields: [createdById], references: [id])
   members   BoardMember[]
   columns   BoardColumn[]
+  tasks     Task[]
+  tags      Tag[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -81,13 +92,109 @@ model BoardMember {
   @@map("board_members")
 }
 
+model Task {
+  id          String       @id @default(uuid())
+  boardId     String       @map("board_id")
+  columnId    String       @map("column_id")
+  title       String
+  description String?
+  priority    TaskPriority @default(MEDIUM)
+  position    Int
+  dueDate     DateTime?    @map("due_date")
+  assigneeId  String?      @map("assignee_id")
+  createdById String       @map("created_by_id")
+
+  board     Board       @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  column    BoardColumn @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  assignee  User?       @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  createdBy User        @relation("TaskCreatedBy", fields: [createdById], references: [id])
+
+  sharedWith     TaskSharedUser[]
+  tags           TaskTag[]
+  checklistItems TaskChecklistItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([columnId, position])
+  @@index([boardId])
+  @@index([columnId])
+  @@index([assigneeId])
+  @@index([createdById])
+  @@index([dueDate])
+  @@map("tasks")
+}
+
+model TaskSharedUser {
+  id     String @id @default(uuid())
+  taskId String @map("task_id")
+  userId String @map("user_id")
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([taskId, userId])
+  @@index([userId])
+  @@map("task_shared_users")
+}
+
+model Tag {
+  id      String @id @default(uuid())
+  boardId String @map("board_id")
+  name    String
+  color   String
+
+  board Board     @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks TaskTag[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([boardId, name])
+  @@index([boardId])
+  @@map("tags")
+}
+
+model TaskTag {
+  id     String @id @default(uuid())
+  taskId String @map("task_id")
+  tagId  String @map("tag_id")
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, tagId])
+  @@index([tagId])
+  @@map("task_tags")
+}
+
+model TaskChecklistItem {
+  id          String  @id @default(uuid())
+  taskId      String  @map("task_id")
+  title       String
+  isCompleted Boolean @default(false) @map("is_completed")
+  position    Int
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([taskId, position])
+  @@index([taskId])
+  @@map("task_checklist_items")
+}
+
 model BoardColumn {
   id       String @id @default(uuid())
   boardId  String @map("board_id")
   name     String
   position Int
 
-  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks Task[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

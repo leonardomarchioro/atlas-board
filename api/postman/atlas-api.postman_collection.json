@@ -1,264 +1,1137 @@
 {
-  "info": {
-    "_postman_id": "a7fe9fe6-6d72-4bb8-8d98-6eb1f2f22f6b",
-    "name": "Atlas API",
-    "description": "Collection das rotas REST atuais da API Atlas.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:3000"
+    "info": {
+        "_postman_id": "a7fe9fe6-6d72-4bb8-8d98-6eb1f2f22f6b",
+        "name": "Atlas API",
+        "description": "Collection das rotas REST atuais da API Atlas, incluindo boards, tarefas, tags e checklist.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
-    {
-      "key": "accessToken",
-      "value": ""
-    },
-    {
-      "key": "refreshToken",
-      "value": ""
-    },
-    {
-      "key": "userName",
-      "value": "Joao Silva"
-    },
-    {
-      "key": "userEmail",
-      "value": "joao@example.com"
-    },
-    {
-      "key": "userPassword",
-      "value": "password123"
-    }
-  ],
-  "item": [
-    {
-      "name": "Auth",
-      "item": [
+    "variable": [
         {
-          "name": "Register",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 201) {",
-                  "  const json = pm.response.json();",
-                  "  pm.collectionVariables.set('accessToken', json.accessToken);",
-                  "  pm.collectionVariables.set('refreshToken', json.refreshToken);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"{{userName}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\",\n  \"passwordConfirmation\": \"{{userPassword}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/auth/register",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "register"
-              ]
-            }
-          },
-          "response": []
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
         },
         {
-          "name": "Login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  pm.collectionVariables.set('accessToken', json.accessToken);",
-                  "  pm.collectionVariables.set('refreshToken', json.refreshToken);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
-            }
-          },
-          "response": []
+            "key": "accessToken",
+            "value": ""
         },
         {
-          "name": "Refresh",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  pm.collectionVariables.set('accessToken', json.accessToken);",
-                  "  pm.collectionVariables.set('refreshToken', json.refreshToken);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/auth/refresh",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "refresh"
-              ]
-            }
-          },
-          "response": []
+            "key": "refreshToken",
+            "value": ""
         },
         {
-          "name": "Logout",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/auth/logout",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "logout"
-              ]
-            }
-          },
-          "response": []
+            "key": "userName",
+            "value": "Joao Silva"
+        },
+        {
+            "key": "userEmail",
+            "value": "joao@example.com"
+        },
+        {
+            "key": "userPassword",
+            "value": "password123"
+        },
+        {
+            "key": "boardId",
+            "value": ""
+        },
+        {
+            "key": "columnId",
+            "value": ""
+        },
+        {
+            "key": "memberId",
+            "value": ""
+        },
+        {
+            "key": "taskId",
+            "value": ""
+        },
+        {
+            "key": "tagId",
+            "value": ""
+        },
+        {
+            "key": "checklistItemId",
+            "value": ""
+        },
+        {
+            "key": "assigneeId",
+            "value": ""
+        },
+        {
+            "key": "sharedUserId",
+            "value": ""
         }
-      ]
-    },
-    {
-      "name": "Users",
-      "item": [
+    ],
+    "item": [
         {
-          "name": "Get Me",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+            "name": "Auth",
+            "item": [
                 {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
+                    "name": "Register",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "  const json = pm.response.json();",
+                                    "  pm.collectionVariables.set('accessToken', json.accessToken);",
+                                    "  pm.collectionVariables.set('refreshToken', json.refreshToken);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"{{userName}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\",\n  \"passwordConfirmation\": \"{{userPassword}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/register",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "  const json = pm.response.json();",
+                                    "  pm.collectionVariables.set('accessToken', json.accessToken);",
+                                    "  pm.collectionVariables.set('refreshToken', json.refreshToken);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Refresh",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "  const json = pm.response.json();",
+                                    "  pm.collectionVariables.set('accessToken', json.accessToken);",
+                                    "  pm.collectionVariables.set('refreshToken', json.refreshToken);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/refresh",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "refresh"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/logout",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "logout"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/users/me",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "me"
-              ]
-            }
-          },
-          "response": []
+            ]
         },
         {
-          "name": "Update Me",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+            "name": "Users",
+            "item": [
                 {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
+                    "name": "Get Me",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/users/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "users",
+                                "me"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Me",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Joao Atlas\",\n  \"avatarUrl\": null\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/users/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "users",
+                                "me"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
-              ]
-            },
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Joao Atlas\",\n  \"avatarUrl\": null\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/users/me",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "me"
-              ]
-            }
-          },
-          "response": []
+            ]
+        },
+        {
+            "name": "Boards",
+            "item": [
+                {
+                    "name": "Create Board",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "  const json = pm.response.json();",
+                                    "  pm.collectionVariables.set('boardId', json.id);",
+                                    "  if (json.columns && json.columns.length) pm.collectionVariables.set('columnId', json.columns[0].id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Atlas Board\",\n  \"description\": \"Board usado pela collection Postman.\",\n  \"columns\": [\n    { \"name\": \"Backlog\" },\n    { \"name\": \"Em andamento\" },\n    { \"name\": \"Concluído\" }\n  ],\n  \"memberEmails\": []\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Boards",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Board",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Board and Columns",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "  const json = pm.response.json();",
+                                    "  if (json.columns && json.columns.length) pm.collectionVariables.set('columnId', json.columns[0].id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Atlas Board Atualizado\",\n  \"description\": \"Colunas centralizadas no update-board.\",\n  \"column\": [\n    { \"id\": \"{{columnId}}\", \"name\": \"Backlog atualizado\" },\n    { \"name\": \"Nova coluna\" }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Board Members",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/members",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "members"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Board Member",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/members/{{memberId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "members",
+                                "{{memberId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Board",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Tasks",
+            "item": [
+                {
+                    "name": "Create Task",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "  const json = pm.response.json();",
+                                    "  pm.collectionVariables.set('taskId', json.id);",
+                                    "  if (json.checklist && json.checklist.length) pm.collectionVariables.set('checklistItemId', json.checklist[0].id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"columnId\": \"{{columnId}}\",\n  \"title\": \"Implementar módulo de tarefas\",\n  \"description\": \"Criar os casos de uso e endpoints REST do módulo de tarefas.\",\n  \"priority\": \"HIGH\",\n  \"assigneeId\": \"{{assigneeId}}\",\n  \"sharedUserIds\": [\"{{sharedUserId}}\"],\n  \"dueDate\": \"2026-08-10T23:59:59.000Z\",\n  \"tagIds\": [\"{{tagId}}\"],\n  \"checklist\": [\n    { \"title\": \"Criar models no Prisma\", \"isCompleted\": true },\n    { \"title\": \"Criar casos de uso\", \"isCompleted\": false },\n    { \"title\": \"Criar controller\", \"isCompleted\": false }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/tasks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "tasks"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Board Tasks",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/tasks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "tasks"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Task",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Task",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Implementar módulo completo\",\n  \"priority\": \"MEDIUM\",\n  \"assigneeId\": null,\n  \"dueDate\": null,\n  \"tagIds\": []\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Task",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Move Task",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"columnId\": \"{{columnId}}\",\n  \"position\": 0\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/move",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "move"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Reorder Column Tasks",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"taskIds\": [\"{{taskId}}\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/columns/{{columnId}}/tasks/reorder",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "columns",
+                                "{{columnId}}",
+                                "tasks",
+                                "reorder"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Shared Users",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"sharedUserIds\": [\"{{sharedUserId}}\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/shared-users",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "shared-users"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Tags",
+            "item": [
+                {
+                    "name": "Create Tag",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "  pm.collectionVariables.set('tagId', pm.response.json().id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Backend\",\n  \"color\": \"#2563EB\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/tags",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "tags"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Board Tags",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/tags",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "tags"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Tag",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Backend atualizado\",\n  \"color\": \"#1D4ED8\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/tags/{{tagId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "tags",
+                                "{{tagId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Tag",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/tags/{{tagId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "boards",
+                                "{{boardId}}",
+                                "tags",
+                                "{{tagId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Checklist",
+            "item": [
+                {
+                    "name": "Add Checklist Item",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201 || pm.response.code === 200) {",
+                                    "  const json = pm.response.json();",
+                                    "  if (json.checklist && json.checklist.length) pm.collectionVariables.set('checklistItemId', json.checklist[json.checklist.length - 1].id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Revisar implementação\",\n  \"isCompleted\": false\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "checklist"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Reorder Checklist Items",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"checklistItemIds\": [\"{{checklistItemId}}\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist/reorder",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "checklist",
+                                "reorder"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Checklist Item",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Revisar implementação atualizada\",\n  \"isCompleted\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist/{{checklistItemId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "checklist",
+                                "{{checklistItemId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Checklist Item",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist/{{checklistItemId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "checklist",
+                                "{{checklistItemId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

@@ -25,5 +25,6 @@ import { BoardAccessService } from "./services/board-access.service";
     BoardAccessService,
     { provide: InviteMailService, useClass: MockInviteMailService },
   ],
+  exports: [BoardAccessService],
 })
 export class BoardsModule {}
