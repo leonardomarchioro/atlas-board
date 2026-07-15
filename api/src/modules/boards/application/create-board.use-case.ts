@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { Injectable, Logger } from "@nestjs/common";
 
 import { UseCase } from "@shared/application/use-case.interface";
@@ -6,6 +5,7 @@ import { PrismaService } from "@shared/database/prisma.service";
 import { AppError } from "@shared/errors/app-error";
 import { ErrorCode } from "@shared/errors/error-codes";
 import { InviteMailService } from "@shared/mail/invite-mail.service";
+import { InvitationTokenService } from "../invitations/services/invitation-token.service";
 import { BoardMustHaveColumnError } from "../errors/board-must-have-column.error";
 import {
   BoardDetails,
@@ -23,7 +23,7 @@ export interface CreateBoardInput {
 
 type CreatedBoard = {
   board: BoardDetails;
-  invites: Array<{ email: string; inviteToken: string; inviteExpiresAt: Date }>;
+  invites: Array<{ email: string; token: string; inviteExpiresAt: Date }>;
 };
 
 @Injectable()
@@ -36,6 +36,7 @@ export class CreateBoardUseCase implements UseCase<
   constructor(
     private readonly prisma: PrismaService,
     private readonly inviteMailService: InviteMailService,
+    private readonly invitationTokens: InvitationTokenService,
   ) {}
 
   async execute(input: CreateBoardInput): Promise<BoardDetails> {
@@ -70,7 +71,7 @@ export class CreateBoardUseCase implements UseCase<
     const inviteExpiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
     const invites = emails.map((email) => ({
       email,
-      inviteToken: randomUUID(),
+      ...this.invitationTokens.generate(),
       inviteExpiresAt,
     }));
 
@@ -96,7 +97,9 @@ export class CreateBoardUseCase implements UseCase<
         if (invites.length > 0) {
           await tx.boardMember.createMany({
             data: invites.map((invite) => ({
-              ...invite,
+              email: invite.email,
+              inviteTokenHash: invite.tokenHash,
+              inviteExpiresAt: invite.inviteExpiresAt,
               boardId: board.id,
               role: "COLLABORATOR",
               status: "PENDING",
@@ -116,7 +119,9 @@ export class CreateBoardUseCase implements UseCase<
         this.inviteMailService.sendInvite({
           boardId: created.board.id,
           boardName: created.board.name,
-          ...invite,
+          email: invite.email,
+          inviteToken: invite.token,
+          inviteExpiresAt: invite.inviteExpiresAt,
         }),
       ),
     );

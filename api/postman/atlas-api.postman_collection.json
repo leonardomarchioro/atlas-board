@@ -35,6 +35,10 @@
             "value": ""
         },
         {
+            "key": "inviteToken",
+            "value": ""
+        },
+        {
             "key": "columnId",
             "value": ""
         },
@@ -475,6 +479,57 @@
                             "host": ["{{baseUrl}}"],
                             "path": ["boards", "{{boardId}}"]
                         }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Board Invitations",
+            "description": "Durante o desenvolvimento local, copie o token do link registrado pelo MockInviteMailService e salve-o na variável inviteToken.",
+            "item": [
+                {
+                    "name": "Get Board Invitation",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/board-invitations/{{inviteToken}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["board-invitations", "{{inviteToken}}"]
+                        },
+                        "description": "Rota pública. Copie inviteToken do link exibido pelo MockInviteMailService."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Accept Board Invitation",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/board-invitations/{{inviteToken}}/accept",
+                            "host": ["{{baseUrl}}"],
+                            "path": [
+                                "board-invitations",
+                                "{{inviteToken}}",
+                                "accept"
+                            ]
+                        },
+                        "description": "Aceita o convite usando o usuário autenticado. Não envie body."
                     },
                     "response": []
                 }

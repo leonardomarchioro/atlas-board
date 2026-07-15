@@ -18,6 +18,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       [ErrorCode.ACCESS_DENIED]: HttpStatus.FORBIDDEN,
       [ErrorCode.UNAUTHORIZED]: HttpStatus.UNAUTHORIZED,
       [ErrorCode.CONFLICT]: HttpStatus.CONFLICT,
+      [ErrorCode.GONE]: HttpStatus.GONE,
       [ErrorCode.VALIDATION_ERROR]: HttpStatus.BAD_REQUEST,
     };
 

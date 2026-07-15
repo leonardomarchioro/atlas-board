@@ -8,6 +8,7 @@ import { TasksModule } from "@modules/tasks/tasks.module";
 import { PrismaModule } from "@shared/database/prisma.module";
 
 const requiredEnvironmentVariables = [
+  "FRONTEND_URL",
   "JWT_ACCESS_SECRET",
   "JWT_ACCESS_EXPIRES_IN",
   "JWT_REFRESH_SECRET",

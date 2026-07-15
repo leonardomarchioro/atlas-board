@@ -9,11 +9,16 @@ import { ListBoardMembersUseCase } from "./application/list-board-members.use-ca
 import { ListUserBoardsUseCase } from "./application/list-user-boards.use-case";
 import { RemoveBoardMemberUseCase } from "./application/remove-board-member.use-case";
 import { UpdateBoardUseCase } from "./application/update-board.use-case";
+import { AcceptBoardInvitationUseCase } from "./invitations/application/accept-board-invitation.use-case";
+import { GetBoardInvitationUseCase } from "./invitations/application/get-board-invitation.use-case";
+import { BoardInvitationsController } from "./invitations/presentation/board-invitations.controller";
+import { CryptoInvitationTokenService } from "./invitations/services/crypto-invitation-token.service";
+import { InvitationTokenService } from "./invitations/services/invitation-token.service";
 import { BoardsController } from "./presentation/boards.controller";
 import { BoardAccessService } from "./services/board-access.service";
 
 @Module({
-  controllers: [BoardsController],
+  controllers: [BoardsController, BoardInvitationsController],
   providers: [
     CreateBoardUseCase,
     ListUserBoardsUseCase,
@@ -23,6 +28,12 @@ import { BoardAccessService } from "./services/board-access.service";
     ListBoardMembersUseCase,
     RemoveBoardMemberUseCase,
     BoardAccessService,
+    GetBoardInvitationUseCase,
+    AcceptBoardInvitationUseCase,
+    {
+      provide: InvitationTokenService,
+      useClass: CryptoInvitationTokenService,
+    },
     { provide: InviteMailService, useClass: MockInviteMailService },
   ],
   exports: [BoardAccessService],
