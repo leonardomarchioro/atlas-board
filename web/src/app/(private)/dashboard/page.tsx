@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { DashboardSession } from "@/components/auth/dashboard-session";
+import { DashboardContent } from "@/components/dashboard/dashboard-content";
 
 export const metadata: Metadata = { title: "Dashboard" };
-export default function DashboardPage() { return <DashboardSession />; }
+export default function DashboardPage() {
+  return <DashboardContent />;
+}
