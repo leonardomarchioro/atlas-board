@@ -44,7 +44,8 @@ export function DashboardContent() {
         ) : boardsQuery.isError ? (
           <BoardsErrorState onRetry={() => void boardsQuery.refetch()} />
         ) : boards.length === 0 ? (
-          <>
+          <div className="space-y-6">
+            <DashboardSummary boards={boards} />
             <section className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div>
                 <h1 className="text-headline-lg">Meus Boards</h1>
@@ -54,7 +55,7 @@ export function DashboardContent() {
               </div>
             </section>
             <BoardsEmptyState />
-          </>
+          </div>
         ) : (
           <div className="space-y-6">
             <DashboardSummary boards={boards} />
@@ -98,7 +99,7 @@ export function DashboardContent() {
       </main>
       <footer className="border-t bg-surface-low">
         <div className="atlas-container py-6 text-center text-body-sm text-muted-foreground md:text-left">
-          © 2026 Atlas SaaS. Todos os direitos reservados.
+          © 2026 Atlas. Todos os direitos reservados.
         </div>
       </footer>
     </div>

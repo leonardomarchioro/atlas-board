@@ -10,7 +10,7 @@ interface Props {
 }
 const filters: Array<{ value: BoardFilter; label: string }> = [
   { value: "all", label: "Todos" },
-  { value: "admin", label: "Criados por mim" },
+  { value: "admin", label: "Administrados" },
   { value: "shared", label: "Compartilhados" },
 ];
 
