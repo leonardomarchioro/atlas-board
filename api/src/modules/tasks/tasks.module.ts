@@ -16,12 +16,17 @@ import { UpdateChecklistItemUseCase } from "./application/update-checklist-item.
 import { UpdateTagUseCase } from "./application/update-tag.use-case";
 import { UpdateTaskSharedUsersUseCase } from "./application/update-task-shared-users.use-case";
 import { UpdateTaskUseCase } from "./application/update-task.use-case";
+import { CreateTaskCommentUseCase } from "./comments/application/create-task-comment.use-case";
+import { DeleteTaskCommentUseCase } from "./comments/application/delete-task-comment.use-case";
+import { ListTaskCommentsUseCase } from "./comments/application/list-task-comments.use-case";
+import { UpdateTaskCommentUseCase } from "./comments/application/update-task-comment.use-case";
+import { TaskCommentsController } from "./comments/presentation/task-comments.controller";
 import { TasksController } from "./presentation/tasks.controller";
 import { TaskAccessService } from "./services/task-access.service";
 
 @Module({
   imports: [BoardsModule],
-  controllers: [TasksController],
+  controllers: [TasksController, TaskCommentsController],
   providers: [
     TaskAccessService,
     CreateTaskUseCase,
@@ -40,6 +45,10 @@ import { TaskAccessService } from "./services/task-access.service";
     UpdateChecklistItemUseCase,
     DeleteChecklistItemUseCase,
     ReorderChecklistItemsUseCase,
+    CreateTaskCommentUseCase,
+    ListTaskCommentsUseCase,
+    UpdateTaskCommentUseCase,
+    DeleteTaskCommentUseCase,
   ],
 })
 export class TasksModule {}

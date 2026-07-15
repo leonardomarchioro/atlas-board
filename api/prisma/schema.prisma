@@ -27,6 +27,7 @@ model User {
   assignedTasks Task[]           @relation("TaskAssignee")
   createdTasks  Task[]           @relation("TaskCreatedBy")
   sharedTasks   TaskSharedUser[]
+  taskComments  TaskComment[]
 
   @@map("users")
 }
@@ -112,6 +113,7 @@ model Task {
   sharedWith     TaskSharedUser[]
   tags           TaskTag[]
   checklistItems TaskChecklistItem[]
+  comments       TaskComment[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -123,6 +125,24 @@ model Task {
   @@index([createdById])
   @@index([dueDate])
   @@map("tasks")
+}
+
+model TaskComment {
+  id       String @id @default(uuid())
+  taskId   String @map("task_id")
+  authorId String @map("author_id")
+  content  String
+
+  task   Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([taskId])
+  @@index([authorId])
+  @@index([taskId, createdAt])
+  @@map("task_comments")
 }
 
 model TaskSharedUser {

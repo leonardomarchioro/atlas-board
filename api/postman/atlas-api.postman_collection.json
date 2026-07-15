@@ -47,6 +47,10 @@
             "value": ""
         },
         {
+            "key": "commentId",
+            "value": ""
+        },
+        {
             "key": "tagId",
             "value": ""
         },
@@ -98,13 +102,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/auth/register",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "auth",
-                                "register"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["auth", "register"]
                         }
                     },
                     "response": []
@@ -140,13 +139,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/auth/login",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "auth",
-                                "login"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["auth", "login"]
                         }
                     },
                     "response": []
@@ -182,13 +176,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/auth/refresh",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "auth",
-                                "refresh"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["auth", "refresh"]
                         }
                     },
                     "response": []
@@ -209,13 +198,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/auth/logout",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "auth",
-                                "logout"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["auth", "logout"]
                         }
                     },
                     "response": []
@@ -242,13 +226,8 @@
                         "header": [],
                         "url": {
                             "raw": "{{baseUrl}}/users/me",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "users",
-                                "me"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["users", "me"]
                         }
                     },
                     "response": []
@@ -279,13 +258,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/users/me",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "users",
-                                "me"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["users", "me"]
                         }
                     },
                     "response": []
@@ -334,12 +308,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards"]
                         }
                     },
                     "response": []
@@ -361,12 +331,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards"]
                         }
                     },
                     "response": []
@@ -388,13 +354,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}"]
                         }
                     },
                     "response": []
@@ -437,13 +398,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}"]
                         }
                     },
                     "response": []
@@ -465,14 +421,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/members",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}",
-                                "members"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "members"]
                         }
                     },
                     "response": []
@@ -494,9 +444,7 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/members/{{memberId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "boards",
                                 "{{boardId}}",
@@ -524,13 +472,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}"]
                         }
                     },
                     "response": []
@@ -579,14 +522,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tasks",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}",
-                                "tasks"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "tasks"]
                         }
                     },
                     "response": []
@@ -608,14 +545,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tasks",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}",
-                                "tasks"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "tasks"]
                         }
                     },
                     "response": []
@@ -637,13 +568,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tasks",
-                                "{{taskId}}"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}"]
                         }
                     },
                     "response": []
@@ -672,13 +598,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tasks",
-                                "{{taskId}}"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}"]
                         }
                     },
                     "response": []
@@ -700,13 +621,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tasks",
-                                "{{taskId}}"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}"]
                         }
                     },
                     "response": []
@@ -735,14 +651,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}/move",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tasks",
-                                "{{taskId}}",
-                                "move"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}", "move"]
                         }
                     },
                     "response": []
@@ -771,9 +681,7 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/columns/{{columnId}}/tasks/reorder",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "boards",
                                 "{{boardId}}",
@@ -810,14 +718,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}/shared-users",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tasks",
-                                "{{taskId}}",
-                                "shared-users"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}", "shared-users"]
                         }
                     },
                     "response": []
@@ -864,14 +766,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tags",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}",
-                                "tags"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "tags"]
                         }
                     },
                     "response": []
@@ -893,14 +789,8 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tags",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "boards",
-                                "{{boardId}}",
-                                "tags"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "tags"]
                         }
                     },
                     "response": []
@@ -929,9 +819,7 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tags/{{tagId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "boards",
                                 "{{boardId}}",
@@ -959,14 +847,147 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tags/{{tagId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "boards",
                                 "{{boardId}}",
                                 "tags",
                                 "{{tagId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Task Comments",
+            "item": [
+                {
+                    "name": "Create Task Comment",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "  const json = pm.response.json();",
+                                    "  pm.collectionVariables.set('commentId', json.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"content\": \"O endpoint foi implementado. Falta adicionar a documentação no Swagger.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/comments",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}", "comments"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Task Comments",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/comments",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}", "comments"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Task Comment",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"content\": \"O endpoint e a documentação do Swagger foram concluídos.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/comments/{{commentId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "comments",
+                                "{{commentId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Task Comment",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/tasks/{{taskId}}/comments/{{commentId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": [
+                                "tasks",
+                                "{{taskId}}",
+                                "comments",
+                                "{{commentId}}"
                             ]
                         }
                     },
@@ -1015,14 +1036,8 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tasks",
-                                "{{taskId}}",
-                                "checklist"
-                            ]
+                            "host": ["{{baseUrl}}"],
+                            "path": ["tasks", "{{taskId}}", "checklist"]
                         }
                     },
                     "response": []
@@ -1051,9 +1066,7 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist/reorder",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "tasks",
                                 "{{taskId}}",
@@ -1088,9 +1101,7 @@
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist/{{checklistItemId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "tasks",
                                 "{{taskId}}",
@@ -1118,9 +1129,7 @@
                         "header": null,
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}/checklist/{{checklistItemId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
+                            "host": ["{{baseUrl}}"],
                             "path": [
                                 "tasks",
                                 "{{taskId}}",
