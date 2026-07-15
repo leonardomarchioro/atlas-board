@@ -16,8 +16,8 @@ export function HeroSection() {
         <span className="text-primary">resultados em foco.</span>
       </h1>
       <p className="mx-auto mb-10 max-w-2xl text-body-lg leading-relaxed text-muted-foreground">
-        A estrutura essencial para equipes que valorizam a clareza e a
-        execução. Organize, colabore e entregue sem ruído.
+        A estrutura essencial para equipes que valorizam a clareza e a execução. Organize, colabore
+        e entregue sem ruído.
       </p>
       <div className="flex justify-center">
         <Link

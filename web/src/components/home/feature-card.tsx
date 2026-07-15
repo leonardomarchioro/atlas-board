@@ -6,11 +6,7 @@ interface FeatureCardProps {
   icon: LucideIcon;
 }
 
-export function FeatureCard({
-  title,
-  description,
-  icon: Icon,
-}: FeatureCardProps) {
+export function FeatureCard({ title, description, icon: Icon }: FeatureCardProps) {
   return (
     <article className="group rounded-lg border bg-surface-low p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-primary/30">
       <div className="mb-4 flex items-center gap-4">

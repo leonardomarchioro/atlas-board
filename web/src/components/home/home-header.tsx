@@ -17,21 +17,12 @@ export function HomeHeader() {
           <BrandMark />
         </Link>
 
-        <nav
-          className="flex items-center gap-1.5 sm:gap-3"
-          aria-label="Navegação principal"
-        >
+        <nav className="flex items-center gap-1.5 sm:gap-3" aria-label="Navegação principal">
           <ThemeToggle />
-          <Link
-            href="/login"
-            className={cn(buttonVariants({ variant: "ghost" }), "px-2 sm:px-3")}
-          >
+          <Link href="/login" className={cn(buttonVariants({ variant: "ghost" }), "px-2 sm:px-3")}>
             Entrar
           </Link>
-          <Link
-            href="/cadastro"
-            className={cn(buttonVariants({ size: "lg" }), "px-3 sm:px-6")}
-          >
+          <Link href="/cadastro" className={cn(buttonVariants({ size: "lg" }), "px-3 sm:px-6")}>
             Cadastrar
           </Link>
         </nav>

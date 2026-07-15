@@ -1,14 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  ArrowRight,
-  Eye,
-  EyeOff,
-  LoaderCircle,
-  LockKeyhole,
-  Mail,
-  UserRound,
-} from "lucide-react";
+import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail, UserRound } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { forwardRef, useState, type ComponentProps } from "react";
@@ -19,14 +11,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLogin, useRegister } from "@/features/auth/hooks/auth-hooks";
-import {
-  loginSchema,
-  type LoginFormData,
-} from "@/features/auth/schemas/login.schema";
-import {
-  registerSchema,
-  type RegisterFormData,
-} from "@/features/auth/schemas/register.schema";
+import { loginSchema, type LoginFormData } from "@/features/auth/schemas/login.schema";
+import { registerSchema, type RegisterFormData } from "@/features/auth/schemas/register.schema";
 import { getApiErrorMessage } from "@/features/auth/utils/get-api-error-message";
 import { getSafeRedirect } from "@/features/auth/utils/safe-redirect";
 import { cn } from "@/lib/utils";
@@ -40,34 +26,33 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   ) : null;
 }
 
-const PasswordInput = forwardRef<
-  HTMLInputElement,
-  ComponentProps<typeof Input>
->(({ className, ...props }, ref) => {
-  const [visible, setVisible] = useState(false);
-  return (
-    <div className="relative">
-      <LockKeyhole
-        className="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground"
-        aria-hidden
-      />
-      <Input
-        ref={ref}
-        type={visible ? "text" : "password"}
-        className={cn(fieldClass, "pr-12", className)}
-        {...props}
-      />
-      <button
-        type="button"
-        onClick={() => setVisible((value) => !value)}
-        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-2"
-        aria-label={visible ? "Ocultar senha" : "Exibir senha"}
-      >
-        {visible ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
-      </button>
-    </div>
-  );
-});
+const PasswordInput = forwardRef<HTMLInputElement, ComponentProps<typeof Input>>(
+  ({ className, ...props }, ref) => {
+    const [visible, setVisible] = useState(false);
+    return (
+      <div className="relative">
+        <LockKeyhole
+          className="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground"
+          aria-hidden
+        />
+        <Input
+          ref={ref}
+          type={visible ? "text" : "password"}
+          className={cn(fieldClass, "pr-12", className)}
+          {...props}
+        />
+        <button
+          type="button"
+          onClick={() => setVisible((value) => !value)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-2"
+          aria-label={visible ? "Ocultar senha" : "Exibir senha"}
+        >
+          {visible ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+        </button>
+      </div>
+    );
+  },
+);
 PasswordInput.displayName = "PasswordInput";
 
 function SocialButtons() {
@@ -136,9 +121,7 @@ export function LoginForm() {
     <div className="space-y-6">
       <header className="space-y-2 text-center md:text-left">
         <h1 className="text-headline-lg">Entrar na sua conta</h1>
-        <p className="text-muted-foreground">
-          Bem-vindo de volta! Faça login para continuar.
-        </p>
+        <p className="text-muted-foreground">Bem-vindo de volta! Faça login para continuar.</p>
       </header>
       <form onSubmit={handleSubmit(submit)} className="space-y-4" noValidate>
         <div className="space-y-2">
@@ -179,42 +162,26 @@ export function LoginForm() {
             name="rememberMe"
             render={({ field }) => (
               <div className="flex items-center gap-2">
-                <Checkbox
-                  id="rememberMe"
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
+                <Checkbox id="rememberMe" checked={field.value} onCheckedChange={field.onChange} />
                 <Label htmlFor="rememberMe" className="text-muted-foreground">
                   Lembrar de mim
                 </Label>
               </div>
             )}
           />
-          <span
-            className="font-label text-label-md text-primary opacity-60"
-            aria-disabled
-          >
+          <span className="font-label text-label-md text-primary opacity-60" aria-disabled>
             Esqueci minha senha
           </span>
         </div>
-        <Button
-          type="submit"
-          className="h-12 w-full"
-          disabled={mutation.isPending}
-        >
-          {mutation.isPending ? (
-            <LoaderCircle className="animate-spin" aria-hidden />
-          ) : null}
+        <Button type="submit" className="h-12 w-full" disabled={mutation.isPending}>
+          {mutation.isPending ? <LoaderCircle className="animate-spin" aria-hidden /> : null}
           {mutation.isPending ? "Entrando..." : "Entrar"}
         </Button>
       </form>
       <SocialButtons />
       <p className="text-center text-body-sm text-muted-foreground">
         Ainda não possui uma conta?{" "}
-        <Link
-          href="/cadastro"
-          className="font-semibold text-primary hover:underline"
-        >
+        <Link href="/cadastro" className="font-semibold text-primary hover:underline">
           Criar conta
         </Link>
       </p>
@@ -251,9 +218,7 @@ export function RegisterForm() {
       toast.success("Conta criada com sucesso.");
       router.replace("/dashboard");
     } catch (error) {
-      toast.error(
-        getApiErrorMessage(error, "Não foi possível criar sua conta."),
-      );
+      toast.error(getApiErrorMessage(error, "Não foi possível criar sua conta."));
     }
   }
   const textField = (
@@ -288,18 +253,10 @@ export function RegisterForm() {
     <div className="space-y-6">
       <header className="space-y-2">
         <h1 className="text-headline-lg">Criar Conta</h1>
-        <p className="text-muted-foreground">
-          Preencha os dados abaixo para começar sua jornada.
-        </p>
+        <p className="text-muted-foreground">Preencha os dados abaixo para começar sua jornada.</p>
       </header>
       <form onSubmit={handleSubmit(submit)} className="space-y-4" noValidate>
-        {textField(
-          "name",
-          "Nome completo",
-          UserRound,
-          "text",
-          "Seu nome completo",
-        )}
+        {textField("name", "Nome completo", UserRound, "text", "Seu nome completo")}
         {textField("email", "E-mail", Mail, "email", "nome@exemplo.com")}
         <div className="space-y-2">
           <Label htmlFor="register-password">Senha</Label>
@@ -308,15 +265,10 @@ export function RegisterForm() {
             autoComplete="new-password"
             placeholder="••••••••"
             aria-invalid={Boolean(errors.password)}
-            aria-describedby={
-              errors.password ? "register-password-error" : undefined
-            }
+            aria-describedby={errors.password ? "register-password-error" : undefined}
             {...register("password")}
           />
-          <FieldError
-            id="register-password-error"
-            message={errors.password?.message}
-          />
+          <FieldError id="register-password-error" message={errors.password?.message} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="passwordConfirmation">Confirmação de senha</Label>
@@ -325,15 +277,10 @@ export function RegisterForm() {
             autoComplete="new-password"
             placeholder="••••••••"
             aria-invalid={Boolean(errors.passwordConfirmation)}
-            aria-describedby={
-              errors.passwordConfirmation ? "confirmation-error" : undefined
-            }
+            aria-describedby={errors.passwordConfirmation ? "confirmation-error" : undefined}
             {...register("passwordConfirmation")}
           />
-          <FieldError
-            id="confirmation-error"
-            message={errors.passwordConfirmation?.message}
-          />
+          <FieldError id="confirmation-error" message={errors.passwordConfirmation?.message} />
         </div>
         <Controller
           control={control}
@@ -351,27 +298,16 @@ export function RegisterForm() {
                   htmlFor="acceptTerms"
                   className="block text-body-sm leading-5 text-muted-foreground"
                 >
-                  Eu aceito os{" "}
-                  <span className="text-primary">Termos de Serviço</span> e a{" "}
-                  <span className="text-primary">Política de Privacidade</span>{" "}
-                  da Atlas.
+                  Eu aceito os <span className="text-primary">Termos de Serviço</span> e a{" "}
+                  <span className="text-primary">Política de Privacidade</span> da Atlas.
                 </Label>
               </div>
-              <FieldError
-                id="terms-error"
-                message={errors.acceptTerms?.message}
-              />
+              <FieldError id="terms-error" message={errors.acceptTerms?.message} />
             </div>
           )}
         />
-        <Button
-          type="submit"
-          className="h-12 w-full"
-          disabled={mutation.isPending}
-        >
-          {mutation.isPending ? (
-            <LoaderCircle className="animate-spin" aria-hidden />
-          ) : null}
+        <Button type="submit" className="h-12 w-full" disabled={mutation.isPending}>
+          {mutation.isPending ? <LoaderCircle className="animate-spin" aria-hidden /> : null}
           {mutation.isPending ? "Criando conta..." : "Criar conta"}
           {!mutation.isPending && <ArrowRight aria-hidden />}
         </Button>
@@ -379,10 +315,7 @@ export function RegisterForm() {
       <SocialButtons />
       <p className="text-center text-body-sm text-muted-foreground">
         Já possui uma conta?{" "}
-        <Link
-          href="/login"
-          className="font-medium text-primary hover:underline"
-        >
+        <Link href="/login" className="font-medium text-primary hover:underline">
           Entrar
         </Link>
       </p>

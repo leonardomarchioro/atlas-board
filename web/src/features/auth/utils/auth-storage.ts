@@ -1,7 +1,11 @@
 import type { AuthTokens } from "@/features/auth/types/auth.types";
 
-export const AUTH_STORAGE_KEYS = { accessToken: "atlas.access-token", refreshToken: "atlas.refresh-token" } as const;
-const getStorage = (): Storage | null => typeof window === "undefined" ? null : window.localStorage;
+export const AUTH_STORAGE_KEYS = {
+  accessToken: "atlas.access-token",
+  refreshToken: "atlas.refresh-token",
+} as const;
+const getStorage = (): Storage | null =>
+  typeof window === "undefined" ? null : window.localStorage;
 
 export const authStorage = {
   getAccessToken: () => getStorage()?.getItem(AUTH_STORAGE_KEYS.accessToken) ?? null,

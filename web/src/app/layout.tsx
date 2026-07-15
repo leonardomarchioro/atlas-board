@@ -17,9 +17,7 @@ export const metadata: Metadata = {
   description: "Plataforma colaborativa para gerenciamento de boards e tarefas.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body

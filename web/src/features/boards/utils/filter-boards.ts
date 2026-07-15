@@ -1,8 +1,4 @@
-import type {
-  BoardFilter,
-  BoardSort,
-  BoardSummary,
-} from "@/features/boards/types/board.types";
+import type { BoardFilter, BoardSort, BoardSummary } from "@/features/boards/types/board.types";
 
 interface FilterBoardsOptions {
   search: string;

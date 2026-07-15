@@ -10,7 +10,10 @@ export function useLogin() {
 }
 export function useRegister() {
   const { setSession } = useAuth();
-  return useMutation({ mutationFn: (input: RegisterInput) => register(input), onSuccess: setSession });
+  return useMutation({
+    mutationFn: (input: RegisterInput) => register(input),
+    onSuccess: setSession,
+  });
 }
 export function useLogout() {
   const { logout } = useAuth();

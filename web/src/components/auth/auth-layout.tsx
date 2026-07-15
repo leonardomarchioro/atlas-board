@@ -24,13 +24,11 @@ export function AuthLayout({ children }: { children: ReactNode }) {
         </Link>
         <div className="relative mx-auto w-full max-w-lg space-y-6">
           <div className="space-y-2">
-            <h1 className="text-headline-xl">
-              Gerencie seu fluxo com maestria
-            </h1>
+            <h1 className="text-headline-xl">Gerencie seu fluxo com maestria</h1>
             <p className="text-body-lg text-muted-foreground">
-              O Atlas transforma a complexidade em clareza. Organize projetos,
-              colabore em tempo real e alcance a produtividade máxima com uma
-              interface pensada para o alto desempenho.
+              O Atlas transforma a complexidade em clareza. Organize projetos, colabore em tempo
+              real e alcance a produtividade máxima com uma interface pensada para o alto
+              desempenho.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -44,10 +42,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
               </span>
             ))}
           </div>
-          <div
-            className="grid h-52 grid-cols-3 gap-4 border-t pt-8"
-            aria-hidden
-          >
+          <div className="grid h-52 grid-cols-3 gap-4 border-t pt-8" aria-hidden>
             {[2, 3, 2].map((count, column) => (
               <div key={column} className="space-y-4">
                 <div className="h-2 w-16 rounded-full bg-muted-foreground/20" />
@@ -64,9 +59,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
             ))}
           </div>
         </div>
-        <p className="relative font-label text-label-sm text-muted-foreground">
-          © 2026 Atlas SaaS
-        </p>
+        <p className="relative font-label text-label-sm text-muted-foreground">© 2026 Atlas SaaS</p>
       </section>
       <section className="relative flex min-h-screen items-center justify-center bg-background p-4 md:p-8">
         <div className="absolute right-4 top-4">

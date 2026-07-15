@@ -12,10 +12,7 @@ import {
   type ReactNode,
 } from "react";
 
-import {
-  getCurrentUser,
-  logout as logoutRequest,
-} from "@/features/auth/api/auth-api";
+import { getCurrentUser, logout as logoutRequest } from "@/features/auth/api/auth-api";
 import { authKeys } from "@/features/auth/auth-keys";
 import type { AuthResponse, AuthUser } from "@/features/auth/types/auth.types";
 import { authStorage } from "@/features/auth/utils/auth-storage";
@@ -104,7 +101,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context)
-    throw new Error("useAuth deve ser utilizado dentro de AuthProvider.");
+  if (!context) throw new Error("useAuth deve ser utilizado dentro de AuthProvider.");
   return context;
 }

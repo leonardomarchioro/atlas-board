@@ -1,12 +1,7 @@
 import { ArrowUpRight, Clock3, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import type { BoardSummary } from "@/features/boards/types/board.types";
 
 const roleLabels = {

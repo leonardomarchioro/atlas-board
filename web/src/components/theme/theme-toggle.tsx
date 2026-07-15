@@ -12,11 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const themes = [
   { value: "light", label: "Claro", icon: Sun },
@@ -40,9 +36,7 @@ export function ThemeToggle() {
         <TooltipTrigger
           render={
             <DropdownMenuTrigger
-              render={
-                <Button variant="outline" size="icon" aria-label="Alterar tema" />
-              }
+              render={<Button variant="outline" size="icon" aria-label="Alterar tema" />}
             />
           }
         >

@@ -7,10 +7,7 @@ interface BrandMarkProps {
   className?: string;
 }
 
-export function BrandMark({
-  size = "default",
-  className,
-}: BrandMarkProps) {
+export function BrandMark({ size = "default", className }: BrandMarkProps) {
   const isSmall = size === "sm";
 
   return (
@@ -23,7 +20,9 @@ export function BrandMark({
       >
         <Layers3 className={isSmall ? "size-4" : "size-5"} aria-hidden />
       </span>
-      <span className={cn("font-bold tracking-tight", isSmall ? "text-body-md" : "text-headline-md")}>
+      <span
+        className={cn("font-bold tracking-tight", isSmall ? "text-body-md" : "text-headline-md")}
+      >
         Atlas
       </span>
     </span>

@@ -6,10 +6,7 @@ import { useAuth } from "@/providers/auth-provider";
 
 function LoadingSession() {
   return (
-    <main
-      className="grid min-h-screen place-items-center bg-background"
-      role="status"
-    >
+    <main className="grid min-h-screen place-items-center bg-background" role="status">
       <div className="flex items-center gap-2 text-muted-foreground">
         <LoaderCircle className="size-5 animate-spin" aria-hidden />
         Verificando sua sessão...
@@ -35,9 +32,7 @@ export function PrivateRouteGuard({ children }: { children: ReactNode }) {
   const search = useSearchParams();
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      const current = search.size
-        ? `${pathname}?${search.toString()}`
-        : pathname;
+      const current = search.size ? `${pathname}?${search.toString()}` : pathname;
       router.replace(`/login?redirect=${encodeURIComponent(current)}`);
     }
   }, [isAuthenticated, isLoading, pathname, router, search]);
