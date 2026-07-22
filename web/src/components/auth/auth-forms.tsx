@@ -18,6 +18,13 @@ import { getSafeRedirect } from "@/features/auth/utils/safe-redirect";
 import { cn } from "@/lib/utils";
 
 const fieldClass = "h-12 bg-surface-low pl-10";
+function authLink(path: string, redirect: string | null, email?: string | null) {
+  const params = new URLSearchParams();
+  if (redirect) params.set("redirect", redirect);
+  if (email) params.set("email", email);
+  const query = params.toString();
+  return query ? `${path}?${query}` : path;
+}
 function FieldError({ id, message }: { id: string; message?: string }) {
   return message ? (
     <p id={id} className="text-body-sm text-destructive" role="alert">
@@ -96,6 +103,7 @@ export function LoginForm() {
   const mutation = useLogin();
   const router = useRouter();
   const search = useSearchParams();
+  const registerUrl = authLink("/cadastro", search.get("redirect"), search.get("email"));
   const {
     register,
     handleSubmit,
@@ -181,7 +189,7 @@ export function LoginForm() {
       <SocialButtons />
       <p className="text-center text-body-sm text-muted-foreground">
         Ainda não possui uma conta?{" "}
-        <Link href="/cadastro" className="font-semibold text-primary hover:underline">
+        <Link href={registerUrl} className="font-semibold text-primary hover:underline">
           Criar conta
         </Link>
       </p>
@@ -192,6 +200,9 @@ export function LoginForm() {
 export function RegisterForm() {
   const mutation = useRegister();
   const router = useRouter();
+  const search = useSearchParams();
+  const invitedEmail = search.get("email")?.trim().toLowerCase() ?? "";
+  const loginUrl = authLink("/login", search.get("redirect"));
   const {
     register,
     handleSubmit,
@@ -201,7 +212,7 @@ export function RegisterForm() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
-      email: "",
+      email: invitedEmail,
       password: "",
       passwordConfirmation: "",
       acceptTerms: false,
@@ -216,7 +227,7 @@ export function RegisterForm() {
         passwordConfirmation: data.passwordConfirmation,
       });
       toast.success("Conta criada com sucesso.");
-      router.replace("/dashboard");
+      router.replace(getSafeRedirect(search.get("redirect")));
     } catch (error) {
       toast.error(getApiErrorMessage(error, "Não foi possível criar sua conta."));
     }
@@ -227,6 +238,7 @@ export function RegisterForm() {
     Icon: typeof UserRound,
     type: string,
     placeholder: string,
+    disabled = false,
   ) => (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
@@ -240,6 +252,8 @@ export function RegisterForm() {
           type={type}
           placeholder={placeholder}
           autoComplete={name}
+          readOnly={disabled}
+          aria-readonly={disabled}
           className={fieldClass}
           aria-invalid={Boolean(errors[name])}
           aria-describedby={errors[name] ? `${name}-error` : undefined}
@@ -257,7 +271,12 @@ export function RegisterForm() {
       </header>
       <form onSubmit={handleSubmit(submit)} className="space-y-4" noValidate>
         {textField("name", "Nome completo", UserRound, "text", "Seu nome completo")}
-        {textField("email", "E-mail", Mail, "email", "nome@exemplo.com")}
+        {textField("email", "E-mail", Mail, "email", "nome@exemplo.com", Boolean(invitedEmail))}
+        {invitedEmail ? (
+          <p className="-mt-2 text-body-sm text-muted-foreground">
+            Este é o e-mail vinculado ao convite.
+          </p>
+        ) : null}
         <div className="space-y-2">
           <Label htmlFor="register-password">Senha</Label>
           <PasswordInput
@@ -315,7 +334,7 @@ export function RegisterForm() {
       <SocialButtons />
       <p className="text-center text-body-sm text-muted-foreground">
         Já possui uma conta?{" "}
-        <Link href="/login" className="font-medium text-primary hover:underline">
+        <Link href={loginUrl} className="font-medium text-primary hover:underline">
           Entrar
         </Link>
       </p>

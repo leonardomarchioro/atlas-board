@@ -17,5 +17,5 @@ export function useRegister() {
 }
 export function useLogout() {
   const { logout } = useAuth();
-  return useMutation({ mutationFn: logout });
+  return useMutation({ mutationFn: (redirectTo?: string) => logout(redirectTo) });
 }

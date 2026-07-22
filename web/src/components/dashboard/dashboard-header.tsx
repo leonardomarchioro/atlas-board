@@ -105,7 +105,7 @@ export function DashboardHeader(props: Props) {
               <DropdownMenuItem
                 variant="destructive"
                 disabled={logout.isPending}
-                onClick={() => logout.mutate()}
+                onClick={() => logout.mutate(undefined)}
               >
                 {logout.isPending ? (
                   <LoaderCircle className="animate-spin" aria-hidden />

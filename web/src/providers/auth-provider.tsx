@@ -16,6 +16,7 @@ import { getCurrentUser, logout as logoutRequest } from "@/features/auth/api/aut
 import { authKeys } from "@/features/auth/auth-keys";
 import type { AuthResponse, AuthUser } from "@/features/auth/types/auth.types";
 import { authStorage } from "@/features/auth/utils/auth-storage";
+import { getSafeRedirect } from "@/features/auth/utils/safe-redirect";
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -24,7 +25,7 @@ interface AuthContextValue {
   setSession: (session: AuthResponse) => void;
   clearSession: () => void;
   refreshUser: () => Promise<void>;
-  logout: () => Promise<void>;
+  logout: (redirectTo?: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -73,15 +74,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [queryClient],
   );
 
-  const logout = useCallback(async () => {
-    const refreshToken = authStorage.getRefreshToken();
-    try {
-      if (refreshToken) await logoutRequest(refreshToken);
-    } finally {
-      clearSession();
-      router.replace("/login");
-    }
-  }, [clearSession, router]);
+  const logout = useCallback(
+    async (redirectTo?: string) => {
+      const refreshToken = authStorage.getRefreshToken();
+      try {
+        if (refreshToken) await logoutRequest(refreshToken);
+      } finally {
+        clearSession();
+        router.replace(getSafeRedirect(redirectTo ?? null, "/login"));
+      }
+    },
+    [clearSession, router],
+  );
 
   const value = useMemo(
     () => ({

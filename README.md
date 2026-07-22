@@ -57,7 +57,7 @@ O projeto está em desenvolvimento e novas funcionalidades serão adicionadas co
 ## TODO:
 
 1. Finalizar comentários no backend - OK
-2. Implementar aceite de convites - back-end ok
+2. Implementar aceite de convites - Ok
 3. Integrar criação/edição de boards no frontend
 4. Implementar o Kanban
 5. Integrar criação e edição de tarefas

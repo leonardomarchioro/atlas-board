@@ -501,7 +501,7 @@
                             "host": ["{{baseUrl}}"],
                             "path": ["board-invitations", "{{inviteToken}}"]
                         },
-                        "description": "Rota pública. Copie inviteToken do link exibido pelo MockInviteMailService."
+                        "description": "Rota pública. Copie inviteToken do link exibido pelo MockInviteMailService após criar um board com memberEmails. Retorna board (id, name, description, membersCount e até 5 members ativos com id, name e avatarUrl), invitedEmail, role, status, invitedBy, expiresAt, acceptedAt, isExpired e canAccept. Não retorna e-mails dos membros nem o hash do token. Token inválido ou indisponível: 404."
                     },
                     "response": []
                 },
@@ -529,7 +529,7 @@
                                 "accept"
                             ]
                         },
-                        "description": "Aceita o convite usando o usuário autenticado. Não envie body."
+                        "description": "Aceita o convite usando o usuário autenticado. Não envie body. Retorna board e membership ativa. Possíveis respostas: 401 sem sessão, 403 e-mail incompatível, 404 token indisponível, 409 convite aceito/usuário já membro e 410 convite expirado."
                     },
                     "response": []
                 }

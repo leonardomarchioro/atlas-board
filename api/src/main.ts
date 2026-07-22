@@ -1,5 +1,6 @@
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { HttpExceptionFilter } from "@shared/presentation/http-exception.filter";
 
@@ -26,6 +27,18 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle("Atlas API")
+    .setDescription("API da plataforma colaborativa Atlas.")
+    .setVersion("1.0")
+    .addBearerAuth()
+    .build();
+  SwaggerModule.setup(
+    "docs",
+    app,
+    SwaggerModule.createDocument(app, swaggerConfig),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }

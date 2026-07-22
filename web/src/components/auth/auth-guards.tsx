@@ -3,6 +3,7 @@ import { LoaderCircle } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 import { useAuth } from "@/providers/auth-provider";
+import { getSafeRedirect } from "@/features/auth/utils/safe-redirect";
 
 function LoadingSession() {
   return (
@@ -18,9 +19,12 @@ function LoadingSession() {
 export function PublicRouteGuard({ children }: { children: ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const search = useSearchParams();
   useEffect(() => {
-    if (!isLoading && isAuthenticated) router.replace("/dashboard");
-  }, [isAuthenticated, isLoading, router]);
+    if (!isLoading && isAuthenticated) {
+      router.replace(getSafeRedirect(search.get("redirect")));
+    }
+  }, [isAuthenticated, isLoading, router, search]);
   if (isLoading || isAuthenticated) return <LoadingSession />;
   return children;
 }

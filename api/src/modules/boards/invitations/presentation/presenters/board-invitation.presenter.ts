@@ -11,6 +11,12 @@ export class BoardInvitationPresenter {
         id: invitation.board.id,
         name: invitation.board.name,
         description: invitation.board.description,
+        membersCount: invitation.board._count.members,
+        members: invitation.board.members.flatMap(({ user }) =>
+          user
+            ? [{ id: user.id, name: user.name, avatarUrl: user.avatarUrl }]
+            : [],
+        ),
       },
       invitedEmail: invitation.email,
       role: invitation.role,
