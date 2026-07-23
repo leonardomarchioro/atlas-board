@@ -42,7 +42,7 @@ export function BoardsEmptyState() {
         Crie seu primeiro board para organizar tarefas, convidar pessoas e acompanhar o progresso do
         seu trabalho.
       </p>
-      <Link href="/boards/novo" className={cn(buttonVariants({ size: "lg" }), "h-12 px-8")}>
+      <Link href="/boards/create" className={cn(buttonVariants({ size: "lg" }), "h-12 px-8")}>
         <Plus aria-hidden />
         Criar Primeiro Board
       </Link>

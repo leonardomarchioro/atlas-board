@@ -1,4 +1,4 @@
-import { CircleHelp, LayoutDashboard, Settings, View } from "lucide-react";
+import { CircleHelp, LayoutDashboard, PanelsTopLeft, Settings, View } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import type { BoardSummary } from "@/features/boards/types/board.types";
@@ -50,9 +50,12 @@ export function BoardSidebar({
           <Link
             key={board.id}
             href={`/boards/${board.id}`}
-            className={`flex h-10 items-center justify-between gap-3 rounded-md px-2 text-body-sm ${board.id === currentBoardId ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/60"}`}
+            title={board.name}
+            aria-label={`Abrir board ${board.name}`}
+            className={`flex h-10 items-center gap-4 rounded-md px-2 text-body-sm ${board.id === currentBoardId ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/60"}`}
           >
-            <span className="min-w-0 truncate opacity-0 group-hover/sidebar:opacity-100">
+            <PanelsTopLeft className="size-5 shrink-0" aria-hidden />
+            <span className="min-w-0 flex-1 truncate opacity-0 transition-opacity group-hover/sidebar:opacity-100">
               {board.name}
             </span>
             <Badge

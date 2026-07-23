@@ -67,7 +67,7 @@ export function DashboardContent() {
                 </p>
               </div>
               <Link
-                href="/boards/novo"
+                href="/boards/create"
                 className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto")}
               >
                 <Plus aria-hidden />
