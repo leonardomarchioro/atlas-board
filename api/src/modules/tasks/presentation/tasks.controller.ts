@@ -13,7 +13,13 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -225,6 +231,28 @@ export class TasksController {
   }
 
   @Post("boards/:boardId/tags")
+  @ApiOperation({
+    summary: "Cria uma tag no board",
+    description: "Disponível somente para administradores ativos do board.",
+  })
+  @ApiCreatedResponse({
+    description: "Tag criada.",
+    schema: {
+      example: {
+        id: "tag-id",
+        boardId: "board-id",
+        name: "Backend",
+        color: "#2563EB",
+        tasksCount: 0,
+        createdAt: "2026-07-23T12:00:00.000Z",
+        updatedAt: "2026-07-23T12:00:00.000Z",
+      },
+    },
+  })
+  @ApiBadRequestResponse({ description: "Dados inválidos." })
+  @ApiForbiddenResponse({ description: "Administrador ativo necessário." })
+  @ApiNotFoundResponse({ description: "Board não encontrado." })
+  @ApiConflictResponse({ description: "Nome de tag já utilizado no board." })
   async createBoardTag(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,
@@ -241,6 +269,28 @@ export class TasksController {
   }
 
   @Get("boards/:boardId/tags")
+  @ApiOperation({
+    summary: "Lista as tags do board",
+    description: "Disponível para membros ativos do board.",
+  })
+  @ApiOkResponse({
+    description: "Tags do board com a quantidade de tarefas associadas.",
+    schema: {
+      example: [
+        {
+          id: "tag-id",
+          boardId: "board-id",
+          name: "Backend",
+          color: "#2563EB",
+          tasksCount: 4,
+          createdAt: "2026-07-23T12:00:00.000Z",
+          updatedAt: "2026-07-23T12:00:00.000Z",
+        },
+      ],
+    },
+  })
+  @ApiForbiddenResponse({ description: "Membro ativo necessário." })
+  @ApiNotFoundResponse({ description: "Board não encontrado." })
   async boardTags(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,
@@ -251,6 +301,15 @@ export class TasksController {
   }
 
   @Patch("boards/:boardId/tags/:tagId")
+  @ApiOperation({
+    summary: "Atualiza uma tag do board",
+    description: "Disponível somente para administradores ativos do board.",
+  })
+  @ApiOkResponse({ description: "Tag atualizada." })
+  @ApiBadRequestResponse({ description: "Dados inválidos." })
+  @ApiForbiddenResponse({ description: "Administrador ativo necessário." })
+  @ApiNotFoundResponse({ description: "Board ou tag não encontrado." })
+  @ApiConflictResponse({ description: "Nome de tag já utilizado no board." })
   async updateBoardTag(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,
@@ -270,6 +329,14 @@ export class TasksController {
 
   @Delete("boards/:boardId/tags/:tagId")
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: "Exclui uma tag do board",
+    description:
+      "Disponível somente para administradores ativos. Remove as associações, sem excluir tarefas.",
+  })
+  @ApiNoContentResponse({ description: "Tag excluída." })
+  @ApiForbiddenResponse({ description: "Administrador ativo necessário." })
+  @ApiNotFoundResponse({ description: "Board ou tag não encontrado." })
   async deleteBoardTag(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,

@@ -43,7 +43,11 @@
             "value": ""
         },
         {
-            "key": "memberId",
+            "key": "boardMemberId",
+            "value": ""
+        },
+        {
+            "key": "inviteEmail",
             "value": ""
         },
         {
@@ -320,6 +324,25 @@
                 },
                 {
                     "name": "List Boards",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Retorna os dados resumidos da Dashboard', function () {",
+                                    "  pm.response.to.have.status(200);",
+                                    "  const boards = pm.response.json();",
+                                    "  if (boards.length) {",
+                                    "    pm.expect(boards[0]).to.have.property('membersCount');",
+                                    "    pm.expect(boards[0]).to.have.property('tasksCount');",
+                                    "    pm.expect(boards[0].members.length).to.be.at.most(4);",
+                                    "  }",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -337,7 +360,8 @@
                             "raw": "{{baseUrl}}/boards",
                             "host": ["{{baseUrl}}"],
                             "path": ["boards"]
-                        }
+                        },
+                        "description": "Lista os boards do usuário com role atual, amostra de até 4 membros ACTIVE, membersCount e tasksCount, sem N+1."
                     },
                     "response": []
                 },
@@ -366,7 +390,7 @@
                     "response": []
                 },
                 {
-                    "name": "Update Board and Columns",
+                    "name": "Update Board Information",
                     "event": [
                         {
                             "listen": "test",
@@ -399,18 +423,34 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Atlas Board Atualizado\",\n  \"description\": \"Colunas centralizadas no update-board.\",\n  \"column\": [\n    { \"id\": \"{{columnId}}\", \"name\": \"Backlog atualizado\" },\n    { \"name\": \"Nova coluna\" }\n  ]\n}"
+                            "raw": "{\n  \"name\": \"Atlas Board Atualizado\",\n  \"description\": null\n}"
                         },
                         "url": {
                             "raw": "{{baseUrl}}/boards/{{boardId}}",
                             "host": ["{{baseUrl}}"],
                             "path": ["boards", "{{boardId}}"]
-                        }
+                        },
+                        "description": "Atualiza nome e descrição. Envie description: null para remover a descrição. Requer um membro ADMIN e ACTIVE."
                     },
                     "response": []
                 },
                 {
                     "name": "List Board Members",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "  const members = pm.response.json();",
+                                    "  const removable = members.find((member) => member.status === 'ACTIVE' && !member.isOwner);",
+                                    "  if (removable) pm.collectionVariables.set('boardMemberId', removable.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -433,6 +473,37 @@
                     "response": []
                 },
                 {
+                    "name": "Invite Board Member",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"{{inviteEmail}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/invitations",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "invitations"]
+                        },
+                        "description": "Cria um convite COLLABORATOR com validade de sete dias. Requer um membro ADMIN e ACTIVE."
+                    },
+                    "response": []
+                },
+                {
                     "name": "Delete Board Member",
                     "request": {
                         "auth": {
@@ -448,13 +519,13 @@
                         "method": "DELETE",
                         "header": null,
                         "url": {
-                            "raw": "{{baseUrl}}/boards/{{boardId}}/members/{{memberId}}",
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/members/{{boardMemberId}}",
                             "host": ["{{baseUrl}}"],
                             "path": [
                                 "boards",
                                 "{{boardId}}",
                                 "members",
-                                "{{memberId}}"
+                                "{{boardMemberId}}"
                             ]
                         }
                     },
@@ -462,6 +533,17 @@
                 },
                 {
                     "name": "Delete Board",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 204', function () { pm.response.to.have.status(204); });"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -479,7 +561,8 @@
                             "raw": "{{baseUrl}}/boards/{{boardId}}",
                             "host": ["{{baseUrl}}"],
                             "path": ["boards", "{{boardId}}"]
-                        }
+                        },
+                        "description": "Exclui permanentemente o board e seus recursos dependentes. Requer um membro ADMIN e ACTIVE."
                     },
                     "response": []
                 }
@@ -793,8 +876,11 @@
                             "listen": "test",
                             "script": {
                                 "exec": [
+                                    "pm.test('Status 201', function () { pm.response.to.have.status(201); });",
                                     "if (pm.response.code === 201) {",
-                                    "  pm.collectionVariables.set('tagId', pm.response.json().id);",
+                                    "  const tag = pm.response.json();",
+                                    "  pm.expect(tag).to.have.property('tasksCount', 0);",
+                                    "  pm.collectionVariables.set('tagId', tag.id);",
                                     "}"
                                 ],
                                 "type": "text/javascript"
@@ -831,6 +917,22 @@
                 },
                 {
                     "name": "List Board Tags",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                                    "if (pm.response.code === 200) {",
+                                    "  const tags = pm.response.json();",
+                                    "  pm.expect(tags).to.be.an('array');",
+                                    "  if (tags.length > 0) pm.expect(tags[0]).to.have.property('tasksCount');",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -854,6 +956,22 @@
                 },
                 {
                     "name": "Update Tag",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                                    "if (pm.response.code === 200) {",
+                                    "  const tag = pm.response.json();",
+                                    "  pm.expect(tag.name).to.eql('Backend atualizado');",
+                                    "  pm.expect(tag).to.have.property('tasksCount');",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -889,6 +1007,17 @@
                 },
                 {
                     "name": "Delete Tag",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 204', function () { pm.response.to.have.status(204); });"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",

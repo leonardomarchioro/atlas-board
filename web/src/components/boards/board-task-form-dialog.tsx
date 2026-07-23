@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { BoardColumn, BoardMember } from "@/features/boards/types/board.types";
 import { useCreateTask } from "@/features/tasks/hooks/task-hooks";
@@ -32,8 +39,7 @@ const schema = z.object({
   tagId: z.string(),
 });
 type FormData = z.infer<typeof schema>;
-const fieldClass =
-  "h-10 w-full rounded-md border bg-background px-3 text-body-sm outline-none focus-visible:ring-2 focus-visible:ring-ring";
+const EMPTY_VALUE = "__none__";
 
 export function BoardTaskFormDialog({
   boardId,
@@ -126,50 +132,119 @@ export function BoardTaskFormDialog({
             <Textarea id="task-description" rows={3} {...form.register("description")} />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-2">
-              <span className="font-label text-label-md">Coluna</span>
-              <select className={fieldClass} {...form.register("columnId")}>
-                {columns.map((column) => (
-                  <option key={column.id} value={column.id}>
-                    {column.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="space-y-2">
-              <span className="font-label text-label-md">Prioridade</span>
-              <select className={fieldClass} {...form.register("priority")}>
-                <option value="LOW">Baixa</option>
-                <option value="MEDIUM">Média</option>
-                <option value="HIGH">Alta</option>
-              </select>
-            </label>
-            <label className="space-y-2">
-              <span className="font-label text-label-md">Responsável</span>
-              <select className={fieldClass} {...form.register("assigneeId")}>
-                <option value="">Sem responsável</option>
-                {members.map((member) => (
-                  <option key={member.user.id} value={member.user.id}>
-                    {member.user.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <div className="space-y-2">
+              <Label id="task-column-label">Coluna</Label>
+              <Controller
+                control={form.control}
+                name="columnId"
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-full" aria-labelledby="task-column-label">
+                      <SelectValue>
+                        {columns.find((column) => column.id === field.value)?.name ?? "Coluna"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {columns.map((column) => (
+                        <SelectItem key={column.id} value={column.id}>
+                          {column.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label id="task-priority-label">Prioridade</Label>
+              <Controller
+                control={form.control}
+                name="priority"
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-full" aria-labelledby="task-priority-label">
+                      <SelectValue>
+                        {
+                          {
+                            LOW: "Baixa",
+                            MEDIUM: "Média",
+                            HIGH: "Alta",
+                          }[field.value]
+                        }
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="LOW">Baixa</SelectItem>
+                      <SelectItem value="MEDIUM">Média</SelectItem>
+                      <SelectItem value="HIGH">Alta</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label id="task-assignee-label">Responsável</Label>
+              <Controller
+                control={form.control}
+                name="assigneeId"
+                render={({ field }) => (
+                  <Select
+                    value={field.value || EMPTY_VALUE}
+                    onValueChange={(value) => field.onChange(value === EMPTY_VALUE ? "" : value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="task-assignee-label">
+                      <SelectValue>
+                        {field.value
+                          ? (members.find((member) => member.user.id === field.value)?.user.name ??
+                            "Responsável")
+                          : "Sem responsável"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={EMPTY_VALUE}>Sem responsável</SelectItem>
+                      {members.map((member) => (
+                        <SelectItem key={member.user.id} value={member.user.id}>
+                          {member.user.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
             <label className="space-y-2">
               <span className="font-label text-label-md">Prazo</span>
               <Input type="datetime-local" {...form.register("dueDate")} />
             </label>
-            <label className="space-y-2 sm:col-span-2">
-              <span className="font-label text-label-md">Tag</span>
-              <select className={fieldClass} {...form.register("tagId")}>
-                <option value="">Sem tag</option>
-                {tags.map((tag) => (
-                  <option key={tag.id} value={tag.id}>
-                    {tag.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <div className="space-y-2 sm:col-span-2">
+              <Label id="task-tag-label">Tag</Label>
+              <Controller
+                control={form.control}
+                name="tagId"
+                render={({ field }) => (
+                  <Select
+                    value={field.value || EMPTY_VALUE}
+                    onValueChange={(value) => field.onChange(value === EMPTY_VALUE ? "" : value)}
+                  >
+                    <SelectTrigger className="w-full" aria-labelledby="task-tag-label">
+                      <SelectValue>
+                        {field.value
+                          ? (tags.find((tag) => tag.id === field.value)?.name ?? "Tag")
+                          : "Sem tag"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={EMPTY_VALUE}>Sem tag</SelectItem>
+                      {tags.map((tag) => (
+                        <SelectItem key={tag.id} value={tag.id}>
+                          {tag.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
           </div>
         </form>
         <DialogFooter>

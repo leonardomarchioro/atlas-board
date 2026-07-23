@@ -5,9 +5,11 @@ export class BoardMemberPresenter {
     return {
       id: member.id,
       email: member.email,
+      isOwner: member.userId === member.board.createdById,
       role: member.role,
       status: member.status,
       joinedAt: member.acceptedAt,
+      createdAt: member.createdAt,
       inviteExpiresAt: member.inviteExpiresAt,
       user: member.user,
     };

@@ -1,5 +1,12 @@
 "use client";
 import type { BoardFilter, BoardSort } from "@/features/boards/types/board.types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -13,6 +20,11 @@ const filters: Array<{ value: BoardFilter; label: string }> = [
   { value: "admin", label: "Administrados" },
   { value: "shared", label: "Compartilhados" },
 ];
+const sortLabels: Record<BoardSort, string> = {
+  recent: "Mais recentes",
+  updated: "Última atualização",
+  name: "Nome",
+};
 
 export function DashboardFilters({ filter, sort, onFilterChange, onSortChange }: Props) {
   return (
@@ -39,18 +51,28 @@ export function DashboardFilters({ filter, sort, onFilterChange, onSortChange }:
           </button>
         ))}
       </div>
-      <label className="flex items-center gap-2 font-label text-label-sm text-muted-foreground">
-        Ordenar por:
-        <select
+      <div className="flex items-center gap-2 font-label text-label-sm text-muted-foreground">
+        <span id="dashboard-sort-label">Ordenar por:</span>
+        <Select
           value={sort}
-          onChange={(event) => onSortChange(event.target.value as BoardSort)}
-          className="h-9 rounded-lg border bg-background px-3 font-label text-label-md text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          onValueChange={(value) => {
+            if (value) onSortChange(value as BoardSort);
+          }}
         >
-          <option value="recent">Mais recentes</option>
-          <option value="updated">Última atualização</option>
-          <option value="name">Nome</option>
-        </select>
-      </label>
+          <SelectTrigger
+            size="sm"
+            className="w-48 font-label text-label-md text-foreground"
+            aria-labelledby="dashboard-sort-label"
+          >
+            <SelectValue>{sortLabels[sort]}</SelectValue>
+          </SelectTrigger>
+          <SelectContent align="end">
+            <SelectItem value="recent">Mais recentes</SelectItem>
+            <SelectItem value="updated">Última atualização</SelectItem>
+            <SelectItem value="name">Nome</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </section>
   );
 }

@@ -69,7 +69,7 @@ export function AppHeader({
   const hasSearch = search !== undefined && onSearchChange;
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/80 backdrop-blur-md">
-      <div className="atlas-container !w-full !max-w-none !px-16 flex h-18 justify-between gap-4">
+      <div className="atlas-container !w-full !max-w-none !px-16 flex h-18 items-center justify-between gap-4">
         <div className="flex min-w-0 shrink items-center gap-4 md:gap-6">
           <Link
             href="/dashboard"

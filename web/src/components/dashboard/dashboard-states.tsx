@@ -22,7 +22,28 @@ export function DashboardLoading() {
       <Skeleton className="h-12 w-full" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {Array.from({ length: 6 }).map((_, index) => (
-          <Skeleton key={index} className="h-64 rounded-lg" />
+          <div key={index} className="space-y-5 rounded-lg border bg-card p-5">
+            <div className="flex items-center justify-between">
+              <Skeleton className="size-10 rounded-lg" />
+              <Skeleton className="h-7 w-24" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-7 w-3/4" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-2/3" />
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex -space-x-2">
+                <Skeleton className="size-8 rounded-full ring-2 ring-background" />
+                <Skeleton className="size-8 rounded-full ring-2 ring-background" />
+                <Skeleton className="size-8 rounded-full ring-2 ring-background" />
+              </div>
+              <Skeleton className="h-4 w-24" />
+            </div>
+            <div className="border-t pt-4">
+              <Skeleton className="h-4 w-36" />
+            </div>
+          </div>
         ))}
       </div>
     </div>

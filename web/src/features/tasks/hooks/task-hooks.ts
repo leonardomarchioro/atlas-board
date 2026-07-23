@@ -20,11 +20,11 @@ export function useBoardTasks(boardId: string) {
   });
 }
 
-export function useBoardTags(boardId: string) {
+export function useBoardTags(boardId: string, enabled = true) {
   return useQuery({
     queryKey: taskKeys.tags(boardId),
     queryFn: () => listBoardTags(boardId),
-    enabled: Boolean(boardId),
+    enabled: Boolean(boardId) && enabled,
   });
 }
 

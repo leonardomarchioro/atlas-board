@@ -3,11 +3,15 @@
 import { FilterX, Plus, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { BoardMember } from "@/features/boards/types/board.types";
 import type { TaskFilters, TaskTag } from "@/features/tasks/types/task.types";
-
-const selectClass =
-  "h-9 rounded-md border bg-background px-2 font-label text-label-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export function BoardToolbar({
   filters,
@@ -56,56 +60,106 @@ export function BoardToolbar({
           </button>
         ) : null}
       </div>
-      <select
+      <Select
         value={filters.assigneeId}
-        onChange={(event) => update("assigneeId", event.target.value)}
-        className={selectClass}
-        aria-label="Filtrar por responsável"
+        onValueChange={(value) => {
+          if (value) update("assigneeId", value);
+        }}
       >
-        <option value="all">Todos os responsáveis</option>
-        <option value="unassigned">Sem responsável</option>
-        {members.map((member) => (
-          <option key={member.user.id} value={member.user.id}>
-            {member.user.name}
-          </option>
-        ))}
-      </select>
-      <select
+        <SelectTrigger size="sm" className="w-48" aria-label="Filtrar por responsável">
+          <SelectValue>
+            {filters.assigneeId === "all"
+              ? "Todos os responsáveis"
+              : filters.assigneeId === "unassigned"
+                ? "Sem responsável"
+                : (members.find((member) => member.user.id === filters.assigneeId)?.user.name ??
+                  "Responsável")}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Todos os responsáveis</SelectItem>
+          <SelectItem value="unassigned">Sem responsável</SelectItem>
+          {members.map((member) => (
+            <SelectItem key={member.user.id} value={member.user.id}>
+              {member.user.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select
         value={filters.priority}
-        onChange={(event) => update("priority", event.target.value as TaskFilters["priority"])}
-        className={selectClass}
-        aria-label="Filtrar por prioridade"
+        onValueChange={(value) => {
+          if (value) update("priority", value as TaskFilters["priority"]);
+        }}
       >
-        <option value="all">Todas as prioridades</option>
-        <option value="LOW">Baixa</option>
-        <option value="MEDIUM">Média</option>
-        <option value="HIGH">Alta</option>
-      </select>
-      <select
+        <SelectTrigger size="sm" className="w-44" aria-label="Filtrar por prioridade">
+          <SelectValue>
+            {
+              {
+                all: "Todas as prioridades",
+                LOW: "Baixa",
+                MEDIUM: "Média",
+                HIGH: "Alta",
+              }[filters.priority]
+            }
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Todas as prioridades</SelectItem>
+          <SelectItem value="LOW">Baixa</SelectItem>
+          <SelectItem value="MEDIUM">Média</SelectItem>
+          <SelectItem value="HIGH">Alta</SelectItem>
+        </SelectContent>
+      </Select>
+      <Select
         value={filters.tagId}
-        onChange={(event) => update("tagId", event.target.value)}
-        className={selectClass}
-        aria-label="Filtrar por tag"
+        onValueChange={(value) => {
+          if (value) update("tagId", value);
+        }}
       >
-        <option value="all">Todas as tags</option>
-        {tags.map((tag) => (
-          <option key={tag.id} value={tag.id}>
-            {tag.name}
-          </option>
-        ))}
-      </select>
-      <select
+        <SelectTrigger size="sm" className="w-40" aria-label="Filtrar por tag">
+          <SelectValue>
+            {filters.tagId === "all"
+              ? "Todas as tags"
+              : (tags.find((tag) => tag.id === filters.tagId)?.name ?? "Tag")}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Todas as tags</SelectItem>
+          {tags.map((tag) => (
+            <SelectItem key={tag.id} value={tag.id}>
+              {tag.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select
         value={filters.dueDate}
-        onChange={(event) => update("dueDate", event.target.value as TaskFilters["dueDate"])}
-        className={selectClass}
-        aria-label="Filtrar por prazo"
+        onValueChange={(value) => {
+          if (value) update("dueDate", value as TaskFilters["dueDate"]);
+        }}
       >
-        <option value="all">Todos os prazos</option>
-        <option value="overdue">Atrasadas</option>
-        <option value="today">Hoje</option>
-        <option value="next-seven-days">Próximos 7 dias</option>
-        <option value="none">Sem prazo</option>
-      </select>
+        <SelectTrigger size="sm" className="w-44" aria-label="Filtrar por prazo">
+          <SelectValue>
+            {
+              {
+                all: "Todos os prazos",
+                overdue: "Atrasadas",
+                today: "Hoje",
+                "next-seven-days": "Próximos 7 dias",
+                none: "Sem prazo",
+              }[filters.dueDate]
+            }
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Todos os prazos</SelectItem>
+          <SelectItem value="overdue">Atrasadas</SelectItem>
+          <SelectItem value="today">Hoje</SelectItem>
+          <SelectItem value="next-seven-days">Próximos 7 dias</SelectItem>
+          <SelectItem value="none">Sem prazo</SelectItem>
+        </SelectContent>
+      </Select>
       {activeCount ? (
         <Button variant="ghost" size="sm" onClick={onClear}>
           <FilterX aria-hidden />

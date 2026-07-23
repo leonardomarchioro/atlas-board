@@ -25,6 +25,10 @@ export class TaskAccessService {
     }
   }
 
+  async requireBoardAdmin(boardId: string, userId: string): Promise<void> {
+    await this.boardAccess.requireActiveAdmin(boardId, userId);
+  }
+
   async requireTaskAccess(taskId: string, userId: string) {
     const task = await this.prisma.task.findUnique({
       where: { id: taskId },

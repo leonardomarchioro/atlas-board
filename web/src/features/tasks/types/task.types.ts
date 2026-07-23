@@ -8,6 +8,13 @@ export interface TaskTag {
   color: string;
 }
 
+export interface BoardTag extends TaskTag {
+  boardId: string;
+  tasksCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface BoardTask {
   id: string;
   boardId: string;

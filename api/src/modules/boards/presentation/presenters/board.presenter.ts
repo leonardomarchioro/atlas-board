@@ -4,15 +4,19 @@ import type { BoardSummary } from "../selects/board-summary.select";
 import { BoardColumnPresenter } from "./board-column.presenter";
 
 export class BoardPresenter {
-  static toSummary(board: BoardSummary, userId: string) {
-    const membership = board.members.find(
-      (member) => member.userId === userId && member.status === "ACTIVE",
-    );
+  static toSummary(board: BoardSummary, role: BoardRole) {
     return {
       id: board.id,
       name: board.name,
       description: board.description,
-      role: membership?.role as BoardRole,
+      role,
+      members: board.members.flatMap((member) =>
+        member.user
+          ? [{ id: member.id, role: member.role, user: member.user }]
+          : [],
+      ),
+      membersCount: board._count.members,
+      tasksCount: board._count.tasks,
       createdAt: board.createdAt,
       updatedAt: board.updatedAt,
     };

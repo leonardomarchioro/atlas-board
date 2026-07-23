@@ -5,6 +5,9 @@ export interface BoardSummary {
   name: string;
   description: string | null;
   role: BoardRole;
+  members: BoardMember[];
+  membersCount: number;
+  tasksCount: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -39,6 +42,12 @@ export interface BoardDetails {
   columns: BoardColumn[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface UpdateBoardInput {
+  boardId: string;
+  name?: string;
+  description?: string | null;
 }
 
 export type BoardFilter = "all" | "admin" | "shared";

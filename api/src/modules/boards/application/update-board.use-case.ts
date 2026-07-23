@@ -14,7 +14,7 @@ export type UpdateBoardInput = {
   boardId: string;
   currentUserId: string;
   name?: string;
-  description?: string;
+  description?: string | null;
   column?: Array<{ id?: string; name: string }>;
 };
 
@@ -41,7 +41,9 @@ export class UpdateBoardUseCase implements UseCase<
     return this.prisma.$transaction(async (tx) => {
       const data: Prisma.BoardUpdateInput = {};
       if (name !== undefined) data.name = name.trim();
-      if (description !== undefined) data.description = description.trim();
+      if (description !== undefined) {
+        data.description = description === null ? null : description.trim();
+      }
 
       if (column !== undefined) {
         const currentColumns = await tx.boardColumn.findMany({

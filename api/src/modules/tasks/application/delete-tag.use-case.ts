@@ -15,7 +15,7 @@ export class DeleteTagUseCase implements UseCase<DeleteTagInput> {
     private readonly access: TaskAccessService,
   ) {}
   async execute(input: DeleteTagInput): Promise<void> {
-    await this.access.requireBoardAccess(input.boardId, input.currentUserId);
+    await this.access.requireBoardAdmin(input.boardId, input.currentUserId);
     await this.prisma.$transaction(async (tx) => {
       const result = await tx.tag.deleteMany({
         where: { id: input.tagId, boardId: input.boardId },

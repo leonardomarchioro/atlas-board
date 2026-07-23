@@ -11,6 +11,7 @@ import { RemoveBoardMemberUseCase } from "./application/remove-board-member.use-
 import { UpdateBoardUseCase } from "./application/update-board.use-case";
 import { AcceptBoardInvitationUseCase } from "./invitations/application/accept-board-invitation.use-case";
 import { GetBoardInvitationUseCase } from "./invitations/application/get-board-invitation.use-case";
+import { InviteBoardMemberUseCase } from "./invitations/application/invite-board-member.use-case";
 import { BoardInvitationsController } from "./invitations/presentation/board-invitations.controller";
 import { CryptoInvitationTokenService } from "./invitations/services/crypto-invitation-token.service";
 import { InvitationTokenService } from "./invitations/services/invitation-token.service";
@@ -30,6 +31,7 @@ import { BoardAccessService } from "./services/board-access.service";
     BoardAccessService,
     GetBoardInvitationUseCase,
     AcceptBoardInvitationUseCase,
+    InviteBoardMemberUseCase,
     {
       provide: InvitationTokenService,
       useClass: CryptoInvitationTokenService,

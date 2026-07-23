@@ -4,6 +4,11 @@ export const tagSelect = {
   boardId: true,
   name: true,
   color: true,
+  _count: {
+    select: {
+      tasks: true,
+    },
+  },
   createdAt: true,
   updatedAt: true,
 } satisfies Prisma.TagSelect;
