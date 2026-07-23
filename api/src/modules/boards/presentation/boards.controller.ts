@@ -166,7 +166,6 @@ export class BoardsController {
       currentUserId: user.id,
       name: body.name,
       description: body.description,
-      column: body.column,
     });
     return BoardPresenter.toDetails(board, "ADMIN");
   }

@@ -5,4 +5,5 @@ export const boardKeys = {
   details: () => [...boardKeys.all, "detail"] as const,
   detail: (boardId: string) => [...boardKeys.details(), boardId] as const,
   members: (boardId: string) => [...boardKeys.detail(boardId), "members"] as const,
+  columns: (boardId: string) => [...boardKeys.detail(boardId), "columns"] as const,
 };

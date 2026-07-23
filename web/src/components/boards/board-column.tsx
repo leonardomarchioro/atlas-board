@@ -62,27 +62,6 @@ export function BoardColumn({
           >
             <Plus aria-hidden />
           </Button>
-          {isAdmin ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label={`Ações da coluna ${column.name}`}
-                  />
-                }
-              >
-                <MoreHorizontal aria-hidden />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem disabled>Renomear coluna</DropdownMenuItem>
-                <DropdownMenuItem variant="destructive" disabled>
-                  Excluir coluna
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : null}
         </div>
       </header>
       <div

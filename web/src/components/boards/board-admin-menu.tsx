@@ -1,7 +1,8 @@
 "use client";
 
-import { MoreVertical, Pencil, Tags, Trash2, Users } from "lucide-react";
+import { Columns3, MoreVertical, Pencil, Tags, Trash2, Users } from "lucide-react";
 import { useState } from "react";
+import { ManageBoardColumnsDialog } from "@/components/boards/manage-board-columns-dialog";
 import { EditBoardDialog } from "@/components/boards/edit-board-dialog";
 import { DeleteBoardDialog } from "@/components/boards/delete-board-dialog";
 import { ManageBoardMembersDialog } from "@/components/boards/manage-board-members-dialog";
@@ -27,6 +28,7 @@ export function BoardAdminMenu({
   triggerVariant?: "ghost" | "outline";
 }) {
   const [editOpen, setEditOpen] = useState(false);
+  const [columnsOpen, setColumnsOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
   const [tagsOpen, setTagsOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -57,6 +59,10 @@ export function BoardAdminMenu({
             <Pencil aria-hidden />
             Editar board
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setColumnsOpen(true)}>
+            <Columns3 aria-hidden />
+            Gerenciar colunas
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setMembersOpen(true)}>
             <Users aria-hidden />
             Gerenciar membros
@@ -73,6 +79,7 @@ export function BoardAdminMenu({
         </DropdownMenuContent>
       </DropdownMenu>
       <EditBoardDialog board={board} open={editOpen} onOpenChange={setEditOpen} />
+      <ManageBoardColumnsDialog board={board} open={columnsOpen} onOpenChange={setColumnsOpen} />
       <ManageBoardMembersDialog board={board} open={membersOpen} onOpenChange={setMembersOpen} />
       <ManageBoardTagsDialog board={board} open={tagsOpen} onOpenChange={setTagsOpen} />
       <DeleteBoardDialog board={board} open={deleteOpen} onOpenChange={setDeleteOpen} />

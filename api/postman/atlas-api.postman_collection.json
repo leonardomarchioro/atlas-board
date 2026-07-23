@@ -43,6 +43,10 @@
             "value": ""
         },
         {
+            "key": "columnsReorderPayload",
+            "value": ""
+        },
+        {
             "key": "boardMemberId",
             "value": ""
         },
@@ -563,6 +567,212 @@
                             "path": ["boards", "{{boardId}}"]
                         },
                         "description": "Exclui permanentemente o board e seus recursos dependentes. Requer um membro ADMIN e ACTIVE."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Board Columns",
+            "item": [
+                {
+                    "name": "List Board Columns",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                                    "if (pm.response.code === 200) {",
+                                    "  const columns = pm.response.json();",
+                                    "  pm.expect(columns).to.be.an('array');",
+                                    "  if (columns.length) pm.collectionVariables.set('columnId', columns[0].id);",
+                                    "  const reversed = [...columns].reverse().map((column, position) => ({ id: column.id, position }));",
+                                    "  pm.collectionVariables.set('columnsReorderPayload', JSON.stringify({ columns: reversed }, null, 2));",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/columns",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "columns"]
+                        },
+                        "description": "Lista as colunas ordenadas com tasksCount. Requer ADMIN e ACTIVE."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Board Column",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Backlog atualizado\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/columns/{{columnId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "columns", "{{columnId}}"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Reorder Board Columns",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{{columnsReorderPayload}}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/columns/reorder",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "columns", "reorder"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Board Column",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 201', function () { pm.response.to.have.status(201); });",
+                                    "if (pm.response.code === 201) pm.collectionVariables.set('columnId', pm.response.json().id);"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Homologação\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/columns",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "columns"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Board Column",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Status 204', function () { pm.response.to.have.status(204); });"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/boards/{{boardId}}/columns/{{columnId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["boards", "{{boardId}}", "columns", "{{columnId}}"]
+                        },
+                        "description": "Exclui somente colunas vazias e preserva todas as tarefas."
                     },
                     "response": []
                 }
