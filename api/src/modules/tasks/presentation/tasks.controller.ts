@@ -12,6 +12,12 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common";
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 import type { AuthenticatedUser } from "@shared/auth/authenticated-user.interface";
 import { CurrentUser } from "@shared/auth/current-user.decorator";
 import { JwtAuthGuard } from "@shared/auth/jwt-auth.guard";
@@ -46,6 +52,8 @@ import { TaskPresenter } from "./presenters/task.presenter";
 
 @Controller()
 @UseGuards(JwtAuthGuard)
+@ApiTags("Tasks")
+@ApiBearerAuth()
 export class TasksController {
   constructor(
     private readonly createTask: CreateTaskUseCase,
@@ -94,6 +102,29 @@ export class TasksController {
   }
 
   @Get("boards/:boardId/tasks")
+  @ApiOperation({ summary: "Lista os resumos das tarefas de um board" })
+  @ApiOkResponse({
+    schema: {
+      example: [
+        {
+          id: "task-id",
+          boardId: "board-id",
+          columnId: "column-id",
+          title: "Implementar Kanban",
+          description: "Construir a visualização principal.",
+          priority: "HIGH",
+          position: 0,
+          dueDate: null,
+          assignee: { id: "user-id", name: "Leonardo", avatarUrl: null },
+          sharedUsers: [],
+          tags: [{ id: "tag-id", name: "Frontend", color: "#2563EB" }],
+          checklistCount: 3,
+          completedChecklistCount: 1,
+          commentsCount: 2,
+        },
+      ],
+    },
+  })
   async list(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,

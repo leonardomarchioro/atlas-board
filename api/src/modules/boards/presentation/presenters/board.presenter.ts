@@ -24,6 +24,12 @@ export class BoardPresenter {
       name: board.name,
       description: board.description,
       role,
+      createdBy: board.createdBy,
+      members: board.members.flatMap((member) =>
+        member.user
+          ? [{ id: member.id, role: member.role, user: member.user }]
+          : [],
+      ),
       columns: board.columns.map(BoardColumnPresenter.toHTTP),
       createdAt: board.createdAt,
       updatedAt: board.updatedAt,

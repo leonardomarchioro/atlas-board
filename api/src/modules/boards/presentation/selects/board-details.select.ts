@@ -5,8 +5,18 @@ export const boardDetailsSelect = {
   name: true,
   description: true,
   createdById: true,
+  createdBy: { select: { id: true, name: true, avatarUrl: true } },
   createdAt: true,
   updatedAt: true,
+  members: {
+    where: { status: "ACTIVE", userId: { not: null } },
+    orderBy: { createdAt: "asc" },
+    select: {
+      id: true,
+      role: true,
+      user: { select: { id: true, name: true, avatarUrl: true } },
+    },
+  },
   columns: {
     orderBy: { position: "asc" },
     select: {

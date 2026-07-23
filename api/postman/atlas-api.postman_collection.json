@@ -360,7 +360,8 @@
                             "raw": "{{baseUrl}}/boards/{{boardId}}",
                             "host": ["{{baseUrl}}"],
                             "path": ["boards", "{{boardId}}"]
-                        }
+                        },
+                        "description": "Retorna os detalhes do board para um membro ativo: role atual, criador público, membros ACTIVE sem e-mail, colunas ordenadas e datas. Respostas esperadas: 403 para não membro e 404 para board inexistente."
                     },
                     "response": []
                 },
@@ -579,7 +580,8 @@
                             "raw": "{{baseUrl}}/boards/{{boardId}}/tasks",
                             "host": ["{{baseUrl}}"],
                             "path": ["boards", "{{boardId}}", "tasks"]
-                        }
+                        },
+                        "description": "Retorna resumos ordenados por coluna e posição, incluindo descrição, responsável público, usuários compartilhados, tags, progresso do checklist e commentsCount. Não retorna comentários ou itens completos do checklist."
                     },
                     "response": []
                 },

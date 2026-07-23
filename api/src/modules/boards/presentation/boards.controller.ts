@@ -11,6 +11,12 @@ import {
   Post,
   UseGuards,
 } from "@nestjs/common";
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 
 import type { AuthenticatedUser } from "@shared/auth/authenticated-user.interface";
 import { CurrentUser } from "@shared/auth/current-user.decorator";
@@ -29,6 +35,8 @@ import { BoardPresenter } from "./presenters/board.presenter";
 
 @Controller("boards")
 @UseGuards(JwtAuthGuard)
+@ApiTags("Boards")
+@ApiBearerAuth()
 export class BoardsController {
   constructor(
     private readonly createBoard: CreateBoardUseCase,
@@ -63,6 +71,28 @@ export class BoardsController {
   }
 
   @Get(":boardId")
+  @ApiOperation({ summary: "Obtém os detalhes do board para um membro ativo" })
+  @ApiOkResponse({
+    schema: {
+      example: {
+        id: "board-id",
+        name: "Projeto Atlas",
+        description: "Desenvolvimento da plataforma.",
+        role: "ADMIN",
+        createdBy: { id: "user-id", name: "Leonardo", avatarUrl: null },
+        members: [
+          {
+            id: "member-id",
+            role: "ADMIN",
+            user: { id: "user-id", name: "Leonardo", avatarUrl: null },
+          },
+        ],
+        columns: [{ id: "column-id", name: "Backlog", position: 0 }],
+        createdAt: "2026-07-22T12:00:00.000Z",
+        updatedAt: "2026-07-22T12:00:00.000Z",
+      },
+    },
+  })
   async findOne(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,
