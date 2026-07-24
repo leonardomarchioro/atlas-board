@@ -11,6 +11,15 @@ import {
   Post,
   UseGuards,
 } from "@nestjs/common";
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 
 import type { AuthenticatedUser } from "@shared/auth/authenticated-user.interface";
 import { CurrentUser } from "@shared/auth/current-user.decorator";
@@ -29,6 +38,8 @@ import {
 
 @Controller("tasks/:taskId/comments")
 @UseGuards(JwtAuthGuard)
+@ApiTags("Task Comments")
+@ApiBearerAuth()
 export class TaskCommentsController {
   constructor(
     private readonly createComment: CreateTaskCommentUseCase,
@@ -38,6 +49,9 @@ export class TaskCommentsController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: "Cria um comentário na tarefa" })
+  @ApiCreatedResponse({ description: "Comentário criado." })
+  @ApiForbiddenResponse({ description: "Membro ativo necessário." })
   async create(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -52,6 +66,8 @@ export class TaskCommentsController {
   }
 
   @Get()
+  @ApiOperation({ summary: "Lista os comentários da tarefa" })
+  @ApiOkResponse({ description: "Comentários em ordem de criação." })
   async list(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -64,6 +80,9 @@ export class TaskCommentsController {
   }
 
   @Patch(":commentId")
+  @ApiOperation({ summary: "Edita um comentário do usuário autenticado" })
+  @ApiOkResponse({ description: "Comentário atualizado." })
+  @ApiForbiddenResponse({ description: "Somente o autor pode editar." })
   async update(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -81,6 +100,9 @@ export class TaskCommentsController {
 
   @Delete(":commentId")
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: "Exclui um comentário do usuário autenticado" })
+  @ApiNoContentResponse({ description: "Comentário excluído." })
+  @ApiForbiddenResponse({ description: "Somente o autor pode excluir." })
   async delete(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,

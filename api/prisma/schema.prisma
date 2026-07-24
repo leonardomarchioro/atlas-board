@@ -46,6 +46,7 @@ enum TaskPriority {
   LOW
   MEDIUM
   HIGH
+  URGENT
 }
 
 model Board {

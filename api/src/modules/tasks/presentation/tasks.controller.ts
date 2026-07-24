@@ -81,6 +81,9 @@ export class TasksController {
   ) {}
 
   @Post("boards/:boardId/tasks")
+  @ApiOperation({ summary: "Cria uma tarefa no board" })
+  @ApiCreatedResponse({ description: "Tarefa criada com checklist e associações solicitadas." })
+  @ApiForbiddenResponse({ description: "Membro ativo necessário." })
   async create(
     @CurrentUser() user: AuthenticatedUser,
     @Param("boardId", ParseUUIDPipe) boardId: string,
@@ -141,6 +144,10 @@ export class TasksController {
   }
 
   @Get("tasks/:taskId")
+  @ApiOperation({ summary: "Obtém os detalhes de uma tarefa" })
+  @ApiOkResponse({ description: "Detalhes, associações e checklist da tarefa." })
+  @ApiForbiddenResponse({ description: "Membro ativo necessário." })
+  @ApiNotFoundResponse({ description: "Tarefa não encontrada." })
   async findOne(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -151,6 +158,8 @@ export class TasksController {
   }
 
   @Patch("tasks/:taskId")
+  @ApiOperation({ summary: "Atualiza parcialmente uma tarefa" })
+  @ApiOkResponse({ description: "Tarefa atualizada." })
   async update(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -175,6 +184,8 @@ export class TasksController {
   }
 
   @Delete("tasks/:taskId")
+  @ApiOperation({ summary: "Exclui uma tarefa e seus dados relacionados" })
+  @ApiNoContentResponse({ description: "Tarefa excluída." })
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(
     @CurrentUser() user: AuthenticatedUser,
@@ -184,6 +195,7 @@ export class TasksController {
   }
 
   @Patch("tasks/:taskId/move")
+  @ApiOperation({ summary: "Move uma tarefa entre posições ou colunas" })
   async move(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -346,6 +358,7 @@ export class TasksController {
   }
 
   @Post("tasks/:taskId/checklist")
+  @ApiOperation({ summary: "Adiciona um item ao checklist" })
   async addItem(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -362,6 +375,7 @@ export class TasksController {
   }
 
   @Patch("tasks/:taskId/checklist/reorder")
+  @ApiOperation({ summary: "Reordena os itens do checklist" })
   async reorderItems(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -377,6 +391,7 @@ export class TasksController {
   }
 
   @Patch("tasks/:taskId/checklist/:checklistItemId")
+  @ApiOperation({ summary: "Atualiza um item do checklist" })
   async updateItem(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,
@@ -395,6 +410,7 @@ export class TasksController {
   }
 
   @Delete("tasks/:taskId/checklist/:checklistItemId")
+  @ApiOperation({ summary: "Exclui um item do checklist" })
   async deleteItem(
     @CurrentUser() user: AuthenticatedUser,
     @Param("taskId", ParseUUIDPipe) taskId: string,

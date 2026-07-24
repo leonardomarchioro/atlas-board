@@ -18,6 +18,7 @@ const priority: Record<
   LOW: { label: "Baixa", variant: "secondary" },
   MEDIUM: { label: "Média", variant: "warning" },
   HIGH: { label: "Alta", variant: "destructive" },
+  URGENT: { label: "Urgente", variant: "destructive" },
 };
 const initials = (name: string) =>
   name

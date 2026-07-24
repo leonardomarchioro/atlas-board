@@ -100,6 +100,7 @@ export function BoardToolbar({
                 LOW: "Baixa",
                 MEDIUM: "Média",
                 HIGH: "Alta",
+                URGENT: "Urgente",
               }[filters.priority]
             }
           </SelectValue>
@@ -109,6 +110,7 @@ export function BoardToolbar({
           <SelectItem value="LOW">Baixa</SelectItem>
           <SelectItem value="MEDIUM">Média</SelectItem>
           <SelectItem value="HIGH">Alta</SelectItem>
+          <SelectItem value="URGENT">Urgente</SelectItem>
         </SelectContent>
       </Select>
       <Select

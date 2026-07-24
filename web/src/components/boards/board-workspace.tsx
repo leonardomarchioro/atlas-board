@@ -40,8 +40,9 @@ export function BoardWorkspace({ boardId }: { boardId: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState<TaskFilters>(emptyFilters);
-  const [createColumnId, setCreateColumnId] = useState<string | null>(null);
   const taskId = searchParams.get("task");
+  const creatingTask = searchParams.get("createTask") === "true";
+  const createColumnId = searchParams.get("columnId");
   const tasks = useMemo(() => tasksQuery.data ?? [], [tasksQuery.data]);
   const visibleTasks = useMemo(() => filterBoardTasks(tasks, filters), [filters, tasks]);
   const activeFilters = countActiveFilters(filters);
@@ -69,6 +70,8 @@ export function BoardWorkspace({ boardId }: { boardId: string }) {
   const board = boardQuery.data;
   const openTask = (id: string) => {
     const params = new URLSearchParams(searchParams.toString());
+    params.delete("createTask");
+    params.delete("columnId");
     params.set("task", id);
     router.push(`${pathname}?${params}`);
   };
@@ -77,8 +80,20 @@ export function BoardWorkspace({ boardId }: { boardId: string }) {
     params.delete("task");
     router.replace(params.size ? `${pathname}?${params}` : pathname);
   };
-  const openCreate = (columnId?: string) =>
-    setCreateColumnId(columnId || board.columns[0]?.id || null);
+  const closeCreate = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("createTask");
+    params.delete("columnId");
+    router.replace(params.size ? `${pathname}?${params}` : pathname);
+  };
+  const openCreate = (columnId?: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("task");
+    params.set("createTask", "true");
+    if (columnId) params.set("columnId", columnId);
+    else params.delete("columnId");
+    router.push(`${pathname}?${params}`);
+  };
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
@@ -124,16 +139,23 @@ export function BoardWorkspace({ boardId }: { boardId: string }) {
       </div>
       <BoardTaskFormDialog
         boardId={board.id}
+        boardName={board.name}
         columns={board.columns}
         members={board.members}
         tags={tagsQuery.data ?? []}
-        open={Boolean(createColumnId)}
-        initialColumnId={createColumnId ?? ""}
+        open={creatingTask}
+        initialColumnId={createColumnId ?? board.columns[0]?.id ?? ""}
         onOpenChange={(open) => {
-          if (!open) setCreateColumnId(null);
+          if (!open) closeCreate();
         }}
       />
-      <BoardTaskDetailsDialog taskId={taskId} onClose={closeTask} />
+      <BoardTaskDetailsDialog
+        taskId={taskId}
+        board={board}
+        boardTasks={tasks}
+        tags={tagsQuery.data ?? []}
+        onClose={closeTask}
+      />
     </div>
   );
 }

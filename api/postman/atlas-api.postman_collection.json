@@ -902,7 +902,7 @@
                     "response": []
                 },
                 {
-                    "name": "Get Task",
+                    "name": "Get Task Details",
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -944,7 +944,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"title\": \"Implementar módulo completo\",\n  \"priority\": \"MEDIUM\",\n  \"assigneeId\": null,\n  \"dueDate\": null,\n  \"tagIds\": []\n}"
+                            "raw": "{\n  \"title\": \"Implementar módulo completo\",\n  \"priority\": \"URGENT\",\n  \"assigneeId\": null,\n  \"dueDate\": null,\n  \"tagIds\": []\n}"
                         },
                         "url": {
                             "raw": "{{baseUrl}}/tasks/{{taskId}}",
