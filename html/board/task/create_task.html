@@ -1,0 +1,185 @@
+<!DOCTYPE html><html class="dark" lang="pt-BR" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        try {
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        "colors": {
+                            "surface-container": "#201f22",
+                            "on-error": "#690005",
+                            "on-tertiary-fixed": "#360f00",
+                            "on-tertiary": "#581e00",
+                            "error-container": "#93000a",
+                            "outline": "#8d90a0",
+                            "tertiary-container": "#bc4800",
+                            "surface-container-highest": "#353437",
+                            "inverse-on-surface": "#313032",
+                            "surface-dim": "#131315",
+                            "on-surface-variant": "#c3c6d7",
+                            "on-secondary": "#213145",
+                            "secondary-fixed": "#d3e4fe",
+                            "surface-container-high": "#2a2a2c",
+                            "on-error-container": "#ffdad6",
+                            "surface-tint": "#b4c5ff",
+                            "secondary-container": "#3a4a5f",
+                            "secondary": "#b7c8e1",
+                            "surface-bright": "#39393b",
+                            "on-primary-fixed-variant": "#003ea8",
+                            "on-primary-fixed": "#00174b",
+                            "surface": "#131315",
+                            "background": "#131315",
+                            "on-tertiary-fixed-variant": "#7d2d00",
+                            "on-background": "#e5e1e4",
+                            "on-tertiary-container": "#ffede6",
+                            "secondary-fixed-dim": "#b7c8e1",
+                            "primary-fixed-dim": "#b4c5ff",
+                            "primary-fixed": "#dbe1ff",
+                            "inverse-primary": "#0053db",
+                            "error": "#ffb4ab",
+                            "tertiary": "#ffb596",
+                            "on-primary": "#002a78",
+                            "tertiary-fixed": "#ffdbcd",
+                            "primary": "#b4c5ff",
+                            "on-secondary-container": "#a9bad3",
+                            "on-secondary-fixed": "#0b1c30",
+                            "on-secondary-fixed-variant": "#38485d",
+                            "primary-container": "#2563eb",
+                            "surface-container-low": "#1c1b1d",
+                            "on-surface": "#e5e1e4",
+                            "surface-container-lowest": "#0e0e10",
+                            "surface-variant": "#353437",
+                            "on-primary-container": "#eeefff",
+                            "inverse-surface": "#e5e1e4",
+                            "tertiary-fixed-dim": "#ffb596",
+                            "outline-variant": "#434655"
+                        },
+                        "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                        },
+                        "spacing": {
+                            "gutter": "24px",
+                            "stack-sm": "8px",
+                            "margin-mobile": "16px",
+                            "unit": "4px",
+                            "stack-md": "16px",
+                            "stack-lg": "24px",
+                            "container-max": "1440px",
+                            "margin-desktop": "32px"
+                        },
+                        "fontFamily": {
+                            "headline-md": ["Inter"],
+                            "body-sm": ["Inter"],
+                            "headline-lg": ["Inter"],
+                            "body-md": ["Inter"],
+                            "label-md": ["Geist"],
+                            "body-lg": ["Inter"],
+                            "headline-lg-mobile": ["Inter"],
+                            "headline-xl": ["Inter"],
+                            "label-sm": ["Geist"]
+                        },
+                        "fontSize": {
+                            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                            "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+                        }
+                    },
+                },
+            }
+        } catch (_e) {}
+    }catch(_e){}</script></head><body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden custom-scrollbar">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Breadcrumb / Back Navigation -->
+<nav class="flex items-center gap-2 mb-stack-lg text-on-surface-variant">
+<button class="p-2 -ml-2 hover:bg-surface-container rounded-full transition-colors flex items-center">
+<span class="material-symbols-outlined" data-original-icon="arrow_back">arrow_back</span>
+</button>
+<span class="font-label-md text-label-md">Projetos</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label-md text-label-md text-on-surface">Atlas Framework</span>
+</nav>
+<!-- Page Header -->
+<header class="flex flex-col md:flex-row md:items-start justify-between gap-stack-md mb-stack-lg border-b border-outline-variant/10 pb-stack-lg">
+<div class="space-y-2 group cursor-pointer">
+<div class="flex items-center gap-2">
+<h1 class="font-headline-xl text-headline-xl text-on-surface group-hover:bg-surface-container-high transition-colors px-2 -mx-2 rounded-lg inline-block outline-none focus:ring-2 focus:ring-primary-container">Criar Nova Tarefa</h1>
+</div>
+<p class="text-on-surface-variant font-body-lg">Atualize os detalhes da tarefa e acompanhe o progresso.</p>
+</div>
+<div class="flex items-center gap-3"><button class="px-4 py-2 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container rounded-lg transition-all">Cancelar</button><button class="px-6 py-2 bg-primary-container text-white rounded-lg font-label-md text-label-md hover:bg-primary/80 transition-colors shadow-lg shadow-primary-container/10">Criar Tarefa</button></div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Main Content (2/3) -->
+<div class="lg:col-span-2 space-y-gutter">
+<!-- Description -->
+<section class="space-y-stack-md">
+  <div class="flex items-center gap-2 text-on-surface">
+    <span class="material-symbols-outlined text-primary">title</span>
+    <h3 class="font-headline-md text-[20px]">Título da Tarefa</h3>
+  </div>
+  <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all cursor-text group relative">
+    <input type="text" class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant font-headline-md outline-none" placeholder="Insira o título da tarefa...">
+  </div>
+</section><section class="space-y-stack-md">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-primary" data-icon="notes">notes</span>
+<h3 class="font-headline-md text-[20px]">Descrição</h3>
+</div>
+<div class="bg-surface-container-low p-stack-lg rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all cursor-text group relative"><textarea class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant font-body-md resize-none" placeholder="Adicione uma descrição detalhada..." rows="4"></textarea></div>
+</section>
+<!-- Checklist -->
+<section class="space-y-stack-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-primary" data-icon="checklist">checklist</span>
+<h3 class="font-headline-md text-[20px]">Checklist</h3>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-on-surface-variant font-label-md">66% concluído</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[66%] transition-all duration-500 shadow-[0_0_8px_rgba(37,99,235,0.4)]"></div>
+</div>
+<div class="space-y-2"><button class="w-full flex items-center gap-3 p-4 border-2 border-dashed border-outline-variant/20 hover:border-primary/40 hover:bg-primary/5 rounded-xl transition-all group text-on-surface-variant"><span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">add_circle</span><span class="font-body-md">Adicionar item...</span></button></div>
+</section>
+</div>
+<!-- Sidebar Info (1/3) -->
+<aside class="space-y-gutter">
+<section class="bg-surface-container-low rounded-xl border border-outline-variant/10 p-stack-lg space-y-stack-lg">
+<div class="space-y-stack-md">
+<button class="w-full flex justify-between items-center py-2 border-b border-outline-variant/5 hover:bg-surface-container-highest/20 px-2 -mx-2 rounded transition-colors group"><span class="text-on-surface-variant font-label-sm uppercase tracking-widest text-[11px]">Coluna</span><div class="flex items-center gap-2 text-on-surface-variant"><p class="font-label-md">Selecionar</p><span class="material-symbols-outlined text-[16px]">expand_more</span></div></button>
+<button class="w-full flex justify-between items-center py-2 border-b border-outline-variant/5 hover:bg-surface-container-highest/20 px-2 -mx-2 rounded transition-colors group"><span class="text-on-surface-variant font-label-sm uppercase tracking-widest text-[11px]">Prioridade</span><div class="flex items-center gap-1.5 text-on-surface"><span class="font-label-md">Média</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span></div></button><button class="w-full flex justify-between items-center py-2 border-b border-outline-variant/5 hover:bg-surface-container-highest/20 px-2 -mx-2 rounded transition-colors group"><span class="text-on-surface-variant font-label-sm uppercase tracking-widest text-[11px]">Data limite</span><div class="flex items-center gap-2 text-on-surface-variant font-label-md"><span class="material-symbols-outlined text-sm">calendar_today</span>Definir data</div></button>
+<button class="w-full flex justify-between items-center py-2 border-b border-outline-variant/5 hover:bg-surface-container-highest/20 px-2 -mx-2 rounded transition-colors group"><span class="text-on-surface-variant font-label-sm uppercase tracking-widest text-[11px]">Responsável</span><div class="flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">account_circle</span><span class="font-label-md">Atribuir</span></div></button><div class="space-y-2 pt-2">
+  <div class="flex justify-between items-center px-2 -mx-2">
+    <span class="text-on-surface-variant font-label-sm uppercase tracking-widest text-[11px]">Etiquetas</span>
+  </div>
+  <div class="bg-surface-container-low p-2 rounded-lg border border-outline-variant/10 hover:border-primary/30 transition-all flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary text-[18px]">sell</span>
+    <input type="text" class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant font-label-md outline-none p-0" placeholder="Adicionar tag...">
+  </div>
+  <div class="flex flex-wrap gap-2 px-2 -mx-2 mt-2">
+    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[12px] font-label-md border border-primary/20 flex items-center gap-1">
+      Design <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+    </span>
+    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[12px] font-label-md border border-primary/20 flex items-center gap-1">
+      Urgente <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+    </span>
+  </div>
+</div>
+
+</div>
+</section>
+<!-- Dates and Metadata -->
+</aside></div></div>
+
+</body></html>

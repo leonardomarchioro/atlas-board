@@ -7,18 +7,33 @@ import { CSS } from "@dnd-kit/utilities";
 import { CalendarClock, CheckSquare, GripVertical, MessageCircle } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import type { BoardTask, TaskPriority, TaskTag } from "@/features/tasks/types/task.types";
 import { cn } from "@/lib/utils";
 
 const priority: Record<
   TaskPriority,
-  { label: string; variant: "secondary" | "warning" | "destructive" }
+  { label: string; card: string; chip: string }
 > = {
-  LOW: { label: "Baixa", variant: "secondary" },
-  MEDIUM: { label: "Média", variant: "warning" },
-  HIGH: { label: "Alta", variant: "destructive" },
-  URGENT: { label: "Urgente", variant: "destructive" },
+  LOW: {
+    label: "Baixa",
+    card: "border-l-secondary",
+    chip: "bg-secondary text-secondary-foreground",
+  },
+  MEDIUM: {
+    label: "Média",
+    card: "border-l-warning",
+    chip: "bg-warning-soft text-warning-foreground",
+  },
+  HIGH: {
+    label: "Alta",
+    card: "border-l-destructive",
+    chip: "bg-destructive/15 text-destructive",
+  },
+  URGENT: {
+    label: "Urgente",
+    card: "border-l-destructive",
+    chip: "bg-destructive text-destructive-foreground",
+  },
 };
 const initials = (name: string) =>
   name
@@ -60,7 +75,8 @@ export function BoardTaskCard({
       ref={sortable.setNodeRef}
       style={style}
       className={cn(
-        "relative rounded-xl border bg-card p-4 shadow-sm transition-colors hover:border-primary/50",
+        "group relative rounded-xl border border-l-4 bg-surface-low p-4 shadow-sm transition-all hover:border-primary/40 hover:shadow-md",
+        priority[task.priority].card,
         sortable.isDragging && "z-20 opacity-40",
         overlay && "rotate-2 border-primary shadow-overlay",
       )}
@@ -79,38 +95,41 @@ export function BoardTaskCard({
       >
         <div className="mb-3 flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-wrap gap-1.5">
+            <span
+              className={cn(
+                "rounded px-1.5 py-0.5 font-label text-[10px] font-bold uppercase tracking-wider",
+                priority[task.priority].chip,
+              )}
+            >
+              {priority[task.priority].label}
+            </span>
             {task.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag.id}
                 style={{ "--tag-color": safeColor(tag) } as CSSProperties}
-                className="max-w-28 truncate rounded bg-[color-mix(in_oklch,var(--tag-color)_18%,transparent)] px-1.5 py-0.5 font-label text-[10px] font-bold uppercase tracking-wider text-[var(--tag-color)]"
+                className="max-w-24 truncate rounded bg-[color-mix(in_oklch,var(--tag-color)_18%,transparent)] px-1.5 py-0.5 font-label text-[10px] font-bold uppercase tracking-wider text-[var(--tag-color)]"
               >
                 {tag.name}
               </span>
             ))}
+            {task.tags.length > 3 ? (
+              <span className="rounded bg-muted px-1.5 py-0.5 font-label text-[10px] font-bold text-muted-foreground">
+                +{task.tags.length - 3}
+              </span>
+            ) : null}
           </div>
-          <GripVertical className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+          <GripVertical
+            className="size-4 shrink-0 text-muted-foreground/60 transition-colors group-hover:text-muted-foreground"
+            aria-hidden
+          />
         </div>
-        <h3 className="font-semibold leading-snug text-card-foreground">{task.title}</h3>
+        <h3 className="mb-1 font-semibold leading-tight text-card-foreground">{task.title}</h3>
         {task.description ? (
-          <p className="mt-2 line-clamp-2 text-body-sm text-muted-foreground">{task.description}</p>
-        ) : null}
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <Badge variant={priority[task.priority].variant}>{priority[task.priority].label}</Badge>
-          {due ? (
-            <span
-              className={cn(
-                "flex items-center gap-1 text-label-sm",
-                overdue ? "font-semibold text-destructive" : "text-muted-foreground",
-              )}
-            >
-              <CalendarClock className="size-3.5" aria-hidden />
-              {due.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })}
-              {overdue ? <span className="sr-only">, atrasada</span> : null}
-            </span>
-          ) : null}
-        </div>
-        <div className="mt-4 flex items-center justify-between gap-3">
+          <p className="mb-4 line-clamp-2 text-body-sm text-muted-foreground">{task.description}</p>
+        ) : (
+          <div className="mb-4" />
+        )}
+        <div className="mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 text-label-sm text-muted-foreground">
             {task.commentsCount ? (
               <span
@@ -145,6 +164,20 @@ export function BoardTaskCard({
               </Avatar>
             ))}
           </AvatarGroup>
+        </div>
+        <div
+          className={cn(
+            "flex items-center gap-2 border-t pt-2 text-[11px] font-medium",
+            overdue ? "text-destructive" : "text-muted-foreground",
+          )}
+        >
+          <CalendarClock className="size-3.5" aria-hidden />
+          <span>
+            {due
+              ? due.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })
+              : "Sem prazo"}
+            {overdue ? <span className="sr-only">, atrasada</span> : null}
+          </span>
         </div>
       </button>
     </article>

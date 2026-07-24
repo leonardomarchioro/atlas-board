@@ -1,0 +1,463 @@
+<!DOCTYPE html><html class="dark" lang="pt-BR" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Atlas | Criar Novo Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#a9bad3",
+                    "primary-container": "#2563eb",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "inverse-on-surface": "#313032",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "surface-bright": "#39393b",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "surface-tint": "#b4c5ff",
+                    "on-primary": "#002a78",
+                    "on-background": "#e5e1e4",
+                    "inverse-surface": "#e5e1e4",
+                    "surface-container-low": "#1c1b1d",
+                    "tertiary-container": "#bc4800",
+                    "on-tertiary": "#581e00",
+                    "on-secondary-fixed": "#0b1c30",
+                    "secondary-container": "#3a4a5f",
+                    "inverse-primary": "#0053db",
+                    "on-surface": "#e5e1e4",
+                    "surface-container": "#201f22",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-dim": "#131315",
+                    "tertiary-fixed": "#ffdbcd",
+                    "surface-container-highest": "#353437",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-variant": "#353437",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-high": "#2a2a2c",
+                    "on-tertiary-container": "#ffede6",
+                    "on-tertiary-fixed": "#360f00",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "background": "#131315",
+                    "error-container": "#93000a",
+                    "surface-container-lowest": "#0e0e10",
+                    "tertiary": "#ffb596",
+                    "secondary": "#b7c8e1",
+                    "on-surface-variant": "#c3c6d7",
+                    "surface": "#131315",
+                    "on-primary-container": "#eeefff",
+                    "primary": "#b4c5ff",
+                    "outline": "#8d90a0",
+                    "outline-variant": "#434655",
+                    "on-secondary": "#213145",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-desktop": "32px",
+                    "container-max": "1440px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "margin-mobile": "16px",
+                    "stack-lg": "24px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        
+        .glass-card {
+            background: rgba(28, 27, 29, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(67, 70, 85, 0.3);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131315;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353437;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #434655;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10 flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto left-0 right-0">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-bold text-on-background">Atlas</span>
+
+
+</div>
+<div class="flex items-center gap-stack-lg">
+<!-- Search Optional (Consistent with Identity) -->
+
+<div class="flex items-center gap-stack-sm">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden ml-2 border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a tech executive in dark mode aesthetic with soft blue rim lighting, wearing a minimalist black turtleneck. High resolution, sharp focus, clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI0Jqdx93u8nHznVQIzuiNgSKEomapElP60--avVEod14Am0wIvd_RjWx4A8RAD1M8J04_YDOy3CU_Dwntu41_1Ai8CfyMowvjEL2k6WpI3dxZ4XtdbWCL9w33S2xBX-jwURmgETkkwiawSAUjotWcmOAXoigKJ1UQH71s0xZyeDm1-CJrSzz39CurMzEGmPLTAk0w4Tjhzx5BmMAoCSkLvnFe3N3gURiA2oR1RYpbcPJjEV-tNyKwjm7qHZBcSXcJE963qDeqaW8">
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-28 pb-16 px-margin-desktop max-w-container-max mx-auto w-full hidden">
+<!-- Title Section -->
+<div class="mb-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-500">
+<h2 class="font-headline-xl text-headline-xl mb-2">Criar Novo Board</h2>
+<p class="text-on-surface-variant font-body-md max-w-2xl">
+                Configure seu board, defina as colunas iniciais e convide membros para colaborar em tempo real.
+            </p>
+</div>
+<!-- Main Layout: 2 Columns -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Form -->
+<div class="lg:col-span-8 space-y-stack-lg">
+<!-- Section 1: Informações do Board -->
+<section class="glass-card p-stack-lg rounded-xl transition-all duration-300">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+<h3 class="font-headline-md text-headline-md">Informações do Board</h3>
+</div>
+<div class="space-y-stack-md">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                                Nome do board <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all text-on-surface placeholder:text-on-surface-variant/50" id="board-name" placeholder="Ex: Roadmap de Produto 2024" type="text">
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface">Descrição</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all text-on-surface placeholder:text-on-surface-variant/50 resize-none" placeholder="Descreva o propósito deste board..." rows="3"></textarea>
+</div>
+</div>
+</section>
+<!-- Section 2: Colunas do Kanban -->
+<section class="glass-card p-stack-lg rounded-xl transition-all duration-300">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">view_kanban</span>
+<h3 class="font-headline-md text-headline-md">Colunas do Kanban</h3>
+</div>
+<button class="text-primary font-label-md flex items-center gap-1 hover:underline transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Adicionar nova coluna
+                        </button>
+</div>
+<div class="space-y-2" id="kanban-columns">
+<!-- Column Item -->
+<div class="flex items-center gap-stack-sm bg-surface-container-low border border-outline-variant/10 p-3 rounded-lg group hover:border-primary/30 transition-all cursor-grab active:cursor-grabbing">
+<span class="material-symbols-outlined text-on-surface-variant cursor-grab">drag_indicator</span>
+<div class="flex-grow flex items-center justify-between">
+<span class="font-body-md text-on-surface">Backlog</span>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Column Item -->
+<div class="flex items-center gap-stack-sm bg-surface-container-low border border-outline-variant/10 p-3 rounded-lg group hover:border-primary/30 transition-all cursor-grab">
+<span class="material-symbols-outlined text-on-surface-variant">drag_indicator</span>
+<div class="flex-grow flex items-center justify-between">
+<span class="font-body-md text-on-surface">A Fazer</span>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Column Item -->
+<div class="flex items-center gap-stack-sm bg-surface-container-low border border-outline-variant/10 p-3 rounded-lg group hover:border-primary/30 transition-all cursor-grab">
+<span class="material-symbols-outlined text-on-surface-variant">drag_indicator</span>
+<div class="flex-grow flex items-center justify-between">
+<span class="font-body-md text-on-surface">Em Progresso</span>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Column Item -->
+<div class="flex items-center gap-stack-sm bg-surface-container-low border border-outline-variant/10 p-3 rounded-lg group hover:border-primary/30 transition-all cursor-grab">
+<span class="material-symbols-outlined text-on-surface-variant">drag_indicator</span>
+<div class="flex-grow flex items-center justify-between">
+<span class="font-body-md text-on-surface">Revisão</span>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Column Item -->
+<div class="flex items-center gap-stack-sm bg-surface-container-low border border-outline-variant/10 p-3 rounded-lg group hover:border-primary/30 transition-all cursor-grab">
+<span class="material-symbols-outlined text-on-surface-variant">drag_indicator</span>
+<div class="flex-grow flex items-center justify-between">
+<span class="font-body-md text-on-surface">Concluído</span>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Membros Convidados -->
+<section class="glass-card p-stack-lg rounded-xl transition-all duration-300">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person_add</span>
+<h3 class="font-headline-md text-headline-md">Membros Convidados</h3>
+</div>
+<div class="flex gap-2 mb-6">
+<div class="relative flex-grow">
+<input class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all text-on-surface placeholder:text-on-surface-variant/50" placeholder="E-mail do colaborador" type="email">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">alternate_email</span>
+</div>
+<button class="bg-primary text-on-primary font-label-md px-6 rounded-lg hover:brightness-110 active:scale-95 transition-all whitespace-nowrap">
+                            Adicionar convite
+                        </button>
+</div>
+<div class="space-y-2 mb-4" id="invited-members">
+<!-- Member Item -->
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border border-outline-variant/10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary font-label-md">
+                                    JD
+                                </div>
+<div>
+<p class="font-label-md text-on-surface">joao.dasilva@empresa.com</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold">Aguardando confirmação</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-secondary-container/30 text-on-secondary-container text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter border border-secondary-container/50">Colaborador</span>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-2 bg-primary-container/5 p-3 rounded-lg border border-primary/10">
+<span class="material-symbols-outlined text-primary text-[18px]">info</span>
+                        Convidados terão permissão de edição e visualização de tarefas por padrão.
+                    </p>
+</section>
+</div>
+<!-- Right Column: Summary Card -->
+<div class="lg:col-span-4">
+<div class="sticky top-28 space-y-stack-md">
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="bg-primary/10 px-stack-lg py-4 border-b border-outline-variant/10">
+<h3 class="font-headline-md text-headline-md text-primary">Resumo do Board</h3>
+</div>
+<div class="p-stack-lg space-y-6">
+<!-- Visual Progress / Info -->
+<div class="space-y-4">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-label-md">Nome</span>
+<span class="text-on-surface font-medium text-right max-w-[150px] truncate italic" id="summary-name">Não definido</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Total de Colunas</span>
+<span class="text-on-surface font-medium">5 colunas</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Convidados</span>
+<span class="text-on-surface font-medium">1 membro</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-md">Seu Papel</span>
+<span class="bg-primary-container/20 text-primary text-[12px] font-bold px-2 py-1 rounded-lg">ADMINISTRADOR</span>
+</div>
+</div>
+<hr class="border-outline-variant/10">
+<!-- Visual Placeholder for Board Preview -->
+<div class="space-y-3">
+<span class="text-on-surface-variant text-label-sm uppercase tracking-widest font-bold">Visualização Prévia</span>
+<div class="grid grid-cols-4 gap-1.5 h-16">
+<div class="bg-surface-container-highest/50 rounded-sm"></div>
+<div class="bg-surface-container-highest/50 rounded-sm flex flex-col gap-1 p-1">
+<div class="h-2 bg-primary/20 rounded-full w-3/4"></div>
+<div class="h-2 bg-primary/10 rounded-full w-1/2"></div>
+</div>
+<div class="bg-surface-container-highest/50 rounded-sm"></div>
+<div class="bg-surface-container-highest/50 rounded-sm"></div>
+</div>
+</div>
+</div>
+<div class="p-stack-lg bg-surface-container/30 border-t border-outline-variant/10 flex flex-col gap-3">
+<button class="w-full bg-primary text-on-primary font-headline-md py-3 rounded-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard_customize</span>
+                                Criar Board
+                            </button>
+<button class="w-full bg-transparent text-on-surface-variant border border-outline-variant/30 font-label-md py-3 rounded-lg hover:bg-surface-variant/20 transition-all">
+                                Cancelar
+                            </button>
+</div>
+</div>
+<!-- Tips/Help Card -->
+<div class="bg-surface-container-low border border-outline-variant/10 p-stack-md rounded-xl">
+<p class="text-body-sm text-on-surface-variant">
+<strong>Dica:</strong> Você pode mudar a ordem das colunas ou as configurações de membros a qualquer momento após a criação.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="mt-auto py-stack-lg px-margin-desktop max-w-container-max mx-auto w-full border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-on-surface-variant font-body-sm opacity-60 hidden">
+<p class="">© 2024 Atlas SaaS. Todos os direitos reservados.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-primary transition-colors" href="#">Privacidade</a>
+<a class="hover:text-primary transition-colors" href="#">Termos</a>
+<a class="hover:text-primary transition-colors" href="#">Suporte</a>
+</div>
+</footer>
+<script>
+        // Reactive Summary Update
+        const boardNameInput = document.getElementById('board-name');
+        const summaryName = document.getElementById('summary-name');
+
+        boardNameInput.addEventListener('input', (e) => {
+            if (e.target.value.trim() !== "") {
+                summaryName.textContent = e.target.value;
+                summaryName.classList.remove('italic');
+                summaryName.classList.add('text-primary');
+            } else {
+                summaryName.textContent = "Não definido";
+                summaryName.classList.add('italic');
+                summaryName.classList.remove('text-primary');
+            }
+        });
+
+        // Add some micro-interactions for the list items
+        document.querySelectorAll('#kanban-columns > div').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateX(4px)';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+<div class="fixed z-[70] flex items-center justify-center p-4 md:p-6 pt-28 top-0 left-0 right-0 bottom-0" id="create-board-modal">
+<div class="glass-card w-full max-w-3xl rounded-xl overflow-hidden flex flex-col max-h-[90vh] shadow-2xl animate-in fade-in zoom-in-95 duration-300">
+<!-- Modal Header & Progress -->
+<div class="p-6 border-b border-outline-variant/20 bg-surface-container-low">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-headline-md font-bold">Criar Novo Board</h2>
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Step Indicator -->
+<div class="flex items-center justify-between relative px-4 items-start">
+<div class="absolute top-4 left-0 w-full h-0.5 bg-outline-variant/20 z-0"></div>
+<div class="absolute top-4 left-0 h-0.5 bg-primary z-0 transition-all duration-500 w-0"></div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">1</div>
+<span class="text-xs font-medium text-primary">Informações</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm">2</div>
+<span class="text-xs font-medium text-on-surface-variant">Colunas</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm">3</div>
+<span class="text-xs font-medium text-on-surface-variant">Membros</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm">4</div>
+<span class="text-xs font-medium text-on-surface-variant">Revisão</span>
+</div>
+</div>
+</div>
+<!-- Modal Content (Step 1 Active) -->
+<div class="flex-grow overflow-y-auto p-8">
+<div class="space-y-6" id="step-content">
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="font-label-md text-on-surface">Nome do board <span class="text-error">*</span></label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container transition-all text-on-surface" placeholder="Ex: Roadmap de Produto 2024" type="text">
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-on-surface">Descrição</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container transition-all text-on-surface resize-none" placeholder="Descreva o propósito deste board..." rows="4"></textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 border-t border-outline-variant/20 bg-surface-container-low flex justify-between items-center">
+<button class="px-6 py-2.5 rounded-lg border border-outline-variant/30 text-on-surface-variant font-label-md hover:bg-surface-variant/20 transition-all">
+        Cancelar
+      </button>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 rounded-lg border border-outline-variant/30 text-on-surface-variant font-label-md hover:bg-surface-variant/20 transition-all opacity-50 cursor-not-allowed" disabled="">
+          Voltar
+        </button>
+<button class="px-8 py-2.5 rounded-lg bg-primary text-on-primary font-label-md hover:brightness-110 active:scale-95 transition-all">
+          Próximo
+        </button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

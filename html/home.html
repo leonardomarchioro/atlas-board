@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="pt-BR" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Geist:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#bc4800",
+                      "on-error": "#690005",
+                      "on-tertiary": "#581e00",
+                      "surface-container-lowest": "#0e0e10",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "outline": "#8d90a0",
+                      "on-primary-container": "#eeefff",
+                      "tertiary": "#ffb596",
+                      "background": "#131315",
+                      "primary-fixed": "#dbe1ff",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "on-error-container": "#ffdad6",
+                      "secondary": "#b7c8e1",
+                      "inverse-surface": "#e5e1e4",
+                      "error-container": "#93000a",
+                      "error": "#ffb4ab",
+                      "on-secondary": "#213145",
+                      "inverse-on-surface": "#313032",
+                      "on-primary": "#002a78",
+                      "primary": "#b4c5ff",
+                      "on-surface": "#e5e1e4",
+                      "primary-container": "#2563eb",
+                      "surface-bright": "#39393b",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-tertiary-fixed": "#360f00",
+                      "on-tertiary-container": "#ffede6",
+                      "surface-dim": "#131315",
+                      "outline-variant": "#434655",
+                      "on-surface-variant": "#c3c6d7",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface-container-low": "#1c1b1d",
+                      "surface-container-high": "#2a2a2c",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface": "#131315",
+                      "surface-tint": "#b4c5ff",
+                      "on-primary-fixed": "#00174b",
+                      "surface-variant": "#353437",
+                      "surface-container-highest": "#353437",
+                      "tertiary-fixed": "#ffdbcd",
+                      "secondary-container": "#3a4a5f",
+                      "on-background": "#e5e1e4",
+                      "surface-container": "#201f22",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "inverse-primary": "#0053db"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "margin-desktop": "32px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "container-max": "1440px",
+                      "stack-lg": "24px",
+                      "unit": "4px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "label-md": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "headline-lg": ["Inter"],
+                      "headline-xl": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    }catch(_e){}</script></head><body class="flex flex-col min-h-screen">
+
+    <!-- TopNavBar Implementation -->
+    <nav class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-md border-b border-outline-variant/10">
+        <div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+            <div class="flex items-center gap-8">
+                <span class="font-headline-md text-headline-md font-bold text-on-background dark:text-on-background">Atlas</span>
+            </div>
+            
+            <div class="flex items-center gap-stack-lg">
+                <button class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-150">Entrar</button>
+                <button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-body-md text-body-md font-semibold hover:bg-primary-container/90 transition-all active:scale-95">Cadastrar</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow pt-32 pb-20 px-margin-mobile md:px-margin-desktop">
+        <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
+            
+            <!-- Hero Section -->
+            <div class="mb-20">
+                <h1 class="font-headline-xl text-headline-xl md:text-6xl mb-6 tracking-tight text-on-background">
+                    Projetos em movimento, <br>
+                    <span class="text-primary">resultados em foco.</span>
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">
+                    A estrutura essencial para equipes que valorizam a clareza e a execução. Organize, colabore e entregue sem ruído.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="w-full sm:w-auto bg-primary-container text-on-primary-container px-10 py-4 rounded-xl font-body-lg text-body-lg font-bold hover:bg-primary-container/90 transition-all active:scale-[0.98]">
+                        Cadastrar Agora
+                    </button>
+                    
+                </div>
+            </div>
+
+            <!-- Features Bento-inspired Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full text-left">
+                
+                <!-- Feature 1: Kanban -->
+                <div class="p-stack-lg border border-outline-variant/10 rounded-xl bg-surface-container-low hover:border-primary/30 transition-colors group">
+                    <div class="flex items-center gap-stack-md mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">view_kanban</span>
+                        <h3 class="font-headline-md text-headline-md">Kanban Dinâmico</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Visualize o fluxo de trabalho de ponta a ponta. Arraste, solte e priorize tarefas com simplicidade absoluta.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Real-time -->
+                <div class="p-stack-lg border border-outline-variant/10 rounded-xl bg-surface-container-low hover:border-primary/30 transition-colors group">
+                    <div class="flex items-center gap-stack-md mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+                        <h3 class="font-headline-md text-headline-md">Colaboração em Tempo Real</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Sua equipe sincronizada instantaneamente. Atualizações ao vivo que mantêm todos no mesmo compasso.
+                    </p>
+                </div>
+
+                <!-- Feature 3: Tracking -->
+                <div class="p-stack-lg border border-outline-variant/10 rounded-xl bg-surface-container-low hover:border-primary/30 transition-colors group">
+                    <div class="flex items-center gap-stack-md mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">assignment_turned_in</span>
+                        <h3 class="font-headline-md text-headline-md">Monitoramento de Tarefas</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Acompanhe cada detalhe. De prazos a dependências, tenha controle total sobre o progresso do seu projeto.
+                    </p>
+                </div>
+
+                <!-- Feature 4: Team -->
+                <div class="p-stack-lg border border-outline-variant/10 rounded-xl bg-surface-container-low hover:border-primary/30 transition-colors group">
+                    <div class="flex items-center gap-stack-md mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">groups</span>
+                        <h3 class="font-headline-md text-headline-md">Gestão de Equipe</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Atribua responsabilidades e gerencie a carga de trabalho de forma humana e eficiente.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Implementation -->
+    <footer class="relative bottom-0 w-full bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/10">
+        <div class="flex flex-col md:flex-row justify-between items-center py-stack-lg px-margin-desktop max-w-container-max mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-stack-lg mb-stack-md md:mb-0">
+                <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Atlas</span>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Atlas. Todos os direitos reservados.</p>
+            </div>
+            
+            
+        </div>
+    </footer>
+
+    <!-- Micro-interaction Script -->
+    <script class="">
+        // Simple hover effect for feature cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.transition = 'transform 0.2s ease-out, border-color 0.2s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';</script></body></html>

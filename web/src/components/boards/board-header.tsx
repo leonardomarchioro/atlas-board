@@ -19,7 +19,7 @@ export function BoardHeader({ board, tasksCount }: { board: BoardDetails; tasksC
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-headline-lg">{board.name}</h1>
-          <Badge variant={isAdmin ? "info" : "secondary"}>
+          <Badge className="h-7 justify-self-start px-3 py-1 normal-case" variant={isAdmin ? "info" : "secondary"}>
             {isAdmin ? "Administrador" : "Colaborador"}
           </Badge>
         </div>

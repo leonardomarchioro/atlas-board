@@ -1,0 +1,276 @@
+<!DOCTYPE html><html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Atlas Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090B;
+            color: #e5e1e4;
+        }
+        .glass-card {
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .board-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #353437;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#e5e1e4",
+                      "primary-fixed": "#dbe1ff",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "secondary": "#b7c8e1",
+                      "background": "#09090B",
+                      "primary": "#b4c5ff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface-container-lowest": "#0e0e10",
+                      "error-container": "#93000a",
+                      "secondary-container": "#3a4a5f",
+                      "on-tertiary-fixed": "#360f00",
+                      "inverse-primary": "#0053db",
+                      "inverse-surface": "#e5e1e4",
+                      "surface-variant": "#353437",
+                      "tertiary-fixed": "#ffdbcd",
+                      "on-background": "#e5e1e4",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-secondary": "#213145",
+                      "on-tertiary": "#581e00",
+                      "on-error-container": "#ffdad6",
+                      "surface-tint": "#b4c5ff",
+                      "on-surface-variant": "#c3c6d7",
+                      "inverse-on-surface": "#313032",
+                      "surface-bright": "#39393b",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "tertiary": "#ffb596",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary-container": "#eeefff",
+                      "surface-dim": "#131315",
+                      "surface-container-highest": "#353437",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "outline-variant": "#434655",
+                      "primary-container": "#2563eb",
+                      "surface-container": "#201f22",
+                      "surface-container-high": "#2a2a2c",
+                      "outline": "#8d90a0",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-primary": "#002a78",
+                      "surface-container-low": "#1c1b1d",
+                      "on-primary-fixed": "#00174b",
+                      "on-tertiary-container": "#ffede6",
+                      "surface": "#131315",
+                      "on-secondary-container": "#a9bad3",
+                      "tertiary-container": "#bc4800",
+                      "primary-fixed-dim": "#b4c5ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "stack-sm": "8px",
+                      "stack-lg": "24px",
+                      "margin-desktop": "32px",
+                      "stack-md": "16px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-sm": ["Geist"],
+                      "headline-xl": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "label-md": ["Geist"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface custom-scrollbar">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-stack-lg">
+<span class="font-headline-md text-headline-md font-bold text-on-background">Atlas</span>
+<div class="h-6 w-[1px] bg-outline-variant/30 hidden md:block"></div>
+<h1 class="hidden md:block font-body-md text-body-md text-on-surface-variant">Dashboard</h1>
+</div>
+<div class="flex-1 max-w-xl px-stack-lg hidden md:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/20 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary-container focus:border-transparent transition-all outline-none font-body-sm text-body-sm text-on-surface" placeholder="Buscar boards..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">dark_mode</span>
+</button>
+<div class="relative group">
+<button class="flex items-center gap-2 p-1 pl-1 pr-2 rounded-full hover:bg-surface-variant/50 transition-all border border-outline-variant/10">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a software executive with a friendly expression, wearing minimalist tech-casual attire. The background is a clean, neutral grey with soft studio lighting that emphasizes clarity and professional approachability, matching the Atlas premium SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA96X1vdj34O5BVAR0hDLQyVJ8kzuHthyK7Kt4uVAwBaR30WIZCn8YCvoYj9i9HbsYDF91OrX94eLnBJ1ghgxLPicB4ZhQP64Lnj1mzLkrqV-8tvhddQ0qwUvQT4Wn2bJLrmTGNd6XRZXVUGxDZA59eLabk0GKBTFlEtnsfue2531ZyPKy5c11axSfr9Sdo5AJw3tTxcmKSWqtq2lDObolciXmrc3Yf1q4dWVk89aU3JjJAqnajFnjZxyEhG343rSgawwReJpxOrM">
+</div>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
+</button>
+<!-- Dropdown Mock -->
+<div class="absolute right-0 top-full mt-2 w-48 bg-surface-container-high border border-outline-variant/20 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all py-2 z-50">
+<a class="flex items-center gap-3 px-4 py-2 hover:bg-surface-variant/50 transition-colors font-label-md text-label-md text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span> Meu perfil
+                        </a>
+<a class="flex items-center gap-3 px-4 py-2 hover:bg-surface-variant/50 transition-colors font-label-md text-label-md text-on-surface" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span> Configurações
+                        </a>
+<div class="h-[1px] bg-outline-variant/10 my-1"></div>
+<a class="flex items-center gap-3 px-4 py-2 hover:bg-surface-variant/50 transition-colors font-label-md text-label-md text-error" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span> Sair
+                        </a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Hidden on Mobile) -->
+<!-- Main Content Canvas -->
+<main class="pt-24 min-h-screen px-margin-desktop pb-stack-lg max-w-container-max mx-auto">
+<!-- Metrics Row -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-stack-lg">
+<div class="glass-card p-stack-md rounded-xl flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total de boards</span>
+<div class="flex items-end justify-between">
+<span class="font-headline-md text-headline-md font-bold">0</span>
+<span class="text-primary-container material-symbols-outlined">analytics</span>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-xl flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Criados por mim</span>
+<div class="flex items-end justify-between">
+<span class="font-headline-md text-headline-md font-bold">0</span>
+<span class="text-primary material-symbols-outlined">person</span>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-xl flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Compartilhados</span>
+<div class="flex items-end justify-between">
+<span class="font-headline-md text-headline-md font-bold">0</span>
+<span class="text-secondary material-symbols-outlined">group</span>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-xl flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tarefas pendentes</span>
+<div class="flex items-end justify-between">
+<span class="font-headline-md text-headline-md font-bold">0</span>
+<span class="text-tertiary material-symbols-outlined">pending_actions</span>
+</div>
+</div>
+</section>
+<!-- Section Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-lg">
+<div class="space-y-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Meus Boards</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Acompanhe os boards que você criou ou participa</p>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-semibold flex items-center gap-2 hover:opacity-90 transition-all active:scale-[0.97] shadow-lg shadow-primary-container/10">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                Criar Novo Board
+            </button>
+</section>
+<!-- Filters/Sorting -->
+<section class="flex flex-col sm:flex-row items-center justify-between gap-stack-md mb-stack-md border-b border-outline-variant/10 pb-4">
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 rounded-md bg-surface-container-highest text-on-surface font-label-md text-label-md transition-all">Todos</button>
+<button class="px-4 py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all">Criados por mim</button>
+<button class="px-4 py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all">Compartilhados</button>
+</div>
+<div class="flex items-center gap-stack-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ordenar por:</span>
+<button class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant/20 rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-variant/30 transition-colors">
+                    Recentes
+                    <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+</div>
+</section>
+<!-- Boards Grid -->
+<!-- Empty State (Conditional Mockup) -->
+<section class="flex flex-col items-center justify-center py-20 text-center" id="empty-state"><div class="w-24 h-24 mb-stack-lg rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container"><span class="material-symbols-outlined text-[48px]">add_circle</span></div><h3 class="font-headline-md text-headline-md font-bold mb-2 text-on-surface">Você ainda não possui nenhum board vinculado</h3><p class="max-w-md font-body-md text-body-md text-on-surface-variant mb-stack-lg">Crie seu primeiro board para organizar tarefas, convidar pessoas e acompanhar o progresso do seu trabalho.</p><button class="bg-primary-container text-on-primary-container px-8 py-3 rounded-xl font-label-md text-label-md font-bold flex items-center gap-2 hover:opacity-90 transition-all shadow-lg shadow-primary-container/20 active:scale-[0.97]"><span class="material-symbols-outlined">add</span>Criar Primeiro Board</button></section>
+</main>
+<!-- Footer -->
+<footer class="relative bottom-0 w-full border-t border-outline-variant/10 bg-surface-container-lowest">
+<div class="flex flex-col md:flex-row justify-between items-center py-stack-lg px-margin-desktop max-w-container-max mx-auto gap-4">
+<div class="flex flex-col items-center md:items-start gap-1">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Atlas</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Atlas SaaS. All rights reserved.</p>
+</div>
+<div class="flex gap-stack-lg">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Status</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Micro-interactions
+        document.querySelectorAll('.board-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1.01) translateY(-2px)';
+            });
+        });
+
+        // Toggle visibility for empty state demo (mock logic)
+        // Set to true to see the empty state
+        const showEmptyState = false; 
+        if (showEmptyState) {
+            document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2').classList.add('hidden');
+            document.getElementById('empty-state').classList.remove('hidden');
+        }
+    </script>
+
+
+</body></html>
