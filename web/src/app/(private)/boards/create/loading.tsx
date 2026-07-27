@@ -1,11 +1,9 @@
-import { AppHeader } from "@/components/layout/app-header";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CreateBoardLoading() {
   return (
     <div className="min-h-screen bg-background">
-      <AppHeader section="Criar Board" />
-      <main className="atlas-container flex min-h-screen items-start justify-center pb-8 pt-24 sm:items-center sm:py-24">
+      <main className="atlas-container flex min-h-screen items-start justify-center py-8 sm:items-center">
         <div className="w-full max-w-3xl overflow-hidden rounded-xl border bg-card shadow-overlay">
           <div className="space-y-5 border-b p-6">
             <div className="flex justify-between">

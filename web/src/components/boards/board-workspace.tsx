@@ -3,7 +3,6 @@
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import { AppHeader } from "@/components/layout/app-header";
 import { BoardHeader } from "@/components/boards/board-header";
 import { BoardKanban } from "@/components/boards/board-kanban";
 import { BoardSidebar } from "@/components/boards/board-sidebar";
@@ -97,8 +96,7 @@ export function BoardWorkspace({ boardId }: { boardId: string }) {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
-      <AppHeader section={`Boards / ${board.name}`} />
-      <div className="flex min-h-0 flex-1 pt-18">
+      <div className="flex min-h-0 flex-1">
         <BoardSidebar boards={boardsQuery.data ?? []} currentBoardId={board.id} />
         <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
           <BoardHeader board={board} tasksCount={tasks.length} />

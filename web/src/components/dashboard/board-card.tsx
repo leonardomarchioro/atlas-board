@@ -5,42 +5,12 @@ import { BoardMembers } from "@/components/boards/board-members";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import type { BoardSummary } from "@/features/boards/types/board.types";
+import { formatExactDate, formatRelativeDate } from "@/lib/date";
 
 const roleLabels = {
   ADMIN: "Administrador",
   COLLABORATOR: "Colaborador",
 } as const;
-function formatUpdatedAt(value: string) {
-  const updatedAt = new Date(value);
-  const elapsedMs = Math.max(0, Date.now() - updatedAt.getTime());
-  const elapsedMinutes = Math.floor(elapsedMs / 60_000);
-  const elapsedHours = Math.floor(elapsedMs / 3_600_000);
-  const elapsedDays = Math.floor(elapsedMs / 86_400_000);
-
-  if (elapsedMinutes < 1) return "agora";
-  if (elapsedMinutes < 60) {
-    return `há ${elapsedMinutes} ${elapsedMinutes === 1 ? "minuto" : "minutos"}`;
-  }
-  if (elapsedHours < 24) {
-    return `há ${elapsedHours} ${elapsedHours === 1 ? "hora" : "horas"}`;
-  }
-  if (elapsedDays === 1) return "ontem";
-  if (elapsedDays <= 5) return `há ${elapsedDays} dias`;
-
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(updatedAt);
-}
-
-function formatExactUpdatedAt(value: string) {
-  return new Intl.DateTimeFormat("pt-BR", {
-    dateStyle: "long",
-    timeStyle: "short",
-  }).format(new Date(value));
-}
-
 export function BoardCard({ board }: { board: BoardSummary }) {
   const membersLabel = board.membersCount === 1 ? "1 membro" : `${board.membersCount} membros`;
   const tasksLabel =
@@ -104,11 +74,11 @@ export function BoardCard({ board }: { board: BoardSummary }) {
         </div>
         <div
           className="flex items-center gap-2 border-t border-border/70 pt-3"
-          title={`Atualizado em ${formatExactUpdatedAt(board.updatedAt)}`}
-          aria-label={`Atualizado em ${formatExactUpdatedAt(board.updatedAt)}`}
+          title={`Atualizado em ${formatExactDate(board.updatedAt, { dateStyle: "long", timeStyle: "short" })}`}
+          aria-label={`Atualizado em ${formatExactDate(board.updatedAt, { dateStyle: "long", timeStyle: "short" })}`}
         >
           <Clock3 className="size-3.5" aria-hidden />
-          Atualizado {formatUpdatedAt(board.updatedAt)}
+          Atualizado {formatRelativeDate(board.updatedAt)}
         </div>
       </CardFooter>
     </Card>

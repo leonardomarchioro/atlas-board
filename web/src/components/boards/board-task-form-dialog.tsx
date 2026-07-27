@@ -1,7 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlignLeft, Check, ChevronRight, ListChecks, LoaderCircle, Plus, Trash2, Type } from "lucide-react";
+import {
+  AlignLeft,
+  Check,
+  ChevronRight,
+  ListChecks,
+  LoaderCircle,
+  Plus,
+  Trash2,
+  Type,
+} from "lucide-react";
 import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -15,13 +24,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { BoardColumn, BoardMember } from "@/features/boards/types/board.types";
 import { useCreateTask } from "@/features/tasks/hooks/task-hooks";
-import {
-  createTaskSchema,
-  type CreateTaskFormData,
-} from "@/features/tasks/schemas/task.schema";
+import { createTaskSchema, type CreateTaskFormData } from "@/features/tasks/schemas/task.schema";
 import type { TaskTag } from "@/features/tasks/types/task.types";
 import { cn } from "@/lib/utils";
 
@@ -101,19 +113,36 @@ export function BoardTaskFormDialog({
     <Dialog open={open} onOpenChange={(value) => !mutation.isPending && onOpenChange(value)}>
       <DialogContent className="h-[100dvh] max-h-none max-w-none gap-0 overflow-hidden rounded-none bg-background p-0 sm:h-auto sm:max-h-[90vh] sm:max-w-[1120px] sm:gap-16 sm:rounded-xl">
         <DialogHeader className="border-b px-5 py-4 pr-14 sm:px-6 sm:py-5">
-          <nav className="mb-2 flex items-center gap-2 font-label text-label-sm text-muted-foreground" aria-label="Navegação estrutural">
+          <nav
+            className="mb-2 flex items-center gap-2 font-label text-label-sm text-muted-foreground"
+            aria-label="Navegação estrutural"
+          >
             <span>Boards</span>
             <ChevronRight className="size-4" aria-hidden />
             <span className="text-foreground">{boardName}</span>
           </nav>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <DialogTitle className="text-2xl font-bold tracking-tight">Criar Nova Tarefa</DialogTitle>
-              <DialogDescription className="mt-1 text-body-sm">Atualize os detalhes da tarefa e acompanhe o progresso.</DialogDescription>
+              <DialogTitle className="text-2xl font-bold tracking-tight">
+                Criar Nova Tarefa
+              </DialogTitle>
+              <DialogDescription className="mt-1 text-body-sm">
+                Atualize os detalhes da tarefa e acompanhe o progresso.
+              </DialogDescription>
             </div>
             <div className="flex shrink-0 items-center gap-3">
-              <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={mutation.isPending}>Cancelar</Button>
-              <Button type="submit" form="create-task-form" disabled={mutation.isPending || !form.formState.isValid}>
+              <Button
+                variant="ghost"
+                onClick={() => onOpenChange(false)}
+                disabled={mutation.isPending}
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                form="create-task-form"
+                disabled={mutation.isPending || !form.formState.isValid}
+              >
                 {mutation.isPending ? <LoaderCircle className="animate-spin" aria-hidden /> : null}
                 {mutation.isPending ? "Criando tarefa..." : "Criar tarefa"}
               </Button>
@@ -130,7 +159,9 @@ export function BoardTaskFormDialog({
             <div className="space-y-2">
               <div className="mb-2 flex items-center gap-2">
                 <Type className="size-5 text-primary" aria-hidden />
-                <Label htmlFor="task-title" className="text-lg font-semibold">Título da Tarefa</Label>
+                <Label htmlFor="task-title" className="text-lg font-semibold">
+                  Título da Tarefa
+                </Label>
               </div>
               <div className="rounded-xl border bg-surface-low px-4 py-3 transition-colors focus-within:border-primary/40 has-[input[aria-invalid=true]]:border-destructive">
                 <input
@@ -151,7 +182,9 @@ export function BoardTaskFormDialog({
             <div className="space-y-2">
               <div className="mb-2 flex items-center gap-2">
                 <AlignLeft className="size-5 text-primary" aria-hidden />
-                <Label htmlFor="task-description" className="text-lg font-semibold">Descrição</Label>
+                <Label htmlFor="task-description" className="text-lg font-semibold">
+                  Descrição
+                </Label>
               </div>
               <div className="rounded-xl border bg-surface-low p-4 transition-colors focus-within:border-primary/40">
                 <textarea
@@ -165,40 +198,44 @@ export function BoardTaskFormDialog({
             </div>
             <section className="space-y-3" aria-labelledby="new-checklist-title">
               <div className="flex items-center justify-between">
-                <h3 id="new-checklist-title" className="flex items-center gap-2 text-lg font-semibold"><ListChecks className="size-5 text-primary" aria-hidden />Checklist</h3>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => checklist.append({ id: crypto.randomUUID(), title: "" })}
+                <h3
+                  id="new-checklist-title"
+                  className="flex items-center gap-2 text-lg font-semibold"
                 >
-                  <Plus aria-hidden /> Adicionar item
-                </Button>
+                  <ListChecks className="size-5 text-primary" aria-hidden />
+                  Checklist
+                </h3>
               </div>
-              {checklist.fields.length ? (
-                <div className="space-y-2">
-                  {checklist.fields.map((item, index) => (
-                    <div key={item.id} className="flex items-start gap-2">
-                      <Input
-                        aria-label={`Item ${index + 1} do checklist`}
-                        placeholder="Descreva o item"
-                        {...form.register(`checklist.${index}.title`)}
-                      />
-                      <Button
-                        type="button"
-                        size="icon"
-                        variant="ghost"
-                        aria-label={`Remover item ${index + 1}`}
-                        onClick={() => checklist.remove(index)}
-                      >
-                        <Trash2 aria-hidden />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <button type="button" onClick={() => checklist.append({ id: crypto.randomUUID(), title: "" })} className="flex w-full items-center gap-3 rounded-xl border-2 border-dashed p-4 text-left text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary/5"><Plus className="size-5 text-primary" aria-hidden />Adicionar item...</button>
-              )}
+              <div className="space-y-2">
+                {checklist.fields.map((item, index) => (
+                  <div key={item.id} className="relative">
+                    <Input
+                      aria-label={`Item ${index + 1} do checklist`}
+                      placeholder="Descreva o item"
+                      className="h-auto rounded-xl border-2 bg-transparent py-4 pr-12 pl-4"
+                      {...form.register(`checklist.${index}.title`)}
+                    />
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="absolute top-1/2 right-2 -translate-y-1/2 text-muted-foreground hover:text-destructive"
+                      aria-label={`Remover item ${index + 1}`}
+                      onClick={() => checklist.remove(index)}
+                    >
+                      <Trash2 aria-hidden />
+                    </Button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => checklist.append({ id: crypto.randomUUID(), title: "" })}
+                  className="flex w-full items-center gap-3 rounded-xl border-2 border-dashed p-4 text-left text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary/5"
+                >
+                  <Plus className="size-5 text-primary" aria-hidden />
+                  Adicionar item...
+                </button>
+              </div>
             </section>
           </div>
           <aside className="h-fit space-y-4 rounded-xl border bg-surface-low p-5">
@@ -210,13 +247,18 @@ export function BoardTaskFormDialog({
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger className="w-full">
                       <SelectValue>
-                        {columns.find((column) => column.id === field.value)?.name ?? "Selecione uma coluna"}
+                        {columns.find((column) => column.id === field.value)?.name ??
+                          "Selecione uma coluna"}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      {[...columns].sort((a, b) => a.position - b.position).map((column) => (
-                        <SelectItem key={column.id} value={column.id}>{column.name}</SelectItem>
-                      ))}
+                      {[...columns]
+                        .sort((a, b) => a.position - b.position)
+                        .map((column) => (
+                          <SelectItem key={column.id} value={column.id}>
+                            {column.name}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                 )}
@@ -228,10 +270,14 @@ export function BoardTaskFormDialog({
                 name="priority"
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="w-full"><SelectValue>{priorityLabels[field.value]}</SelectValue></SelectTrigger>
+                    <SelectTrigger className="w-full">
+                      <SelectValue>{priorityLabels[field.value]}</SelectValue>
+                    </SelectTrigger>
                     <SelectContent>
                       {Object.entries(priorityLabels).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>{label}</SelectItem>
+                        <SelectItem key={value} value={value}>
+                          {label}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -246,18 +292,24 @@ export function BoardTaskFormDialog({
                 control={form.control}
                 name="assigneeId"
                 render={({ field }) => (
-                  <Select value={field.value || EMPTY} onValueChange={(v) => field.onChange(v === EMPTY ? "" : v)}>
+                  <Select
+                    value={field.value || EMPTY}
+                    onValueChange={(v) => field.onChange(v === EMPTY ? "" : v)}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue>
                         {field.value
-                          ? members.find((member) => member.user.id === field.value)?.user.name ?? "Responsável"
+                          ? (members.find((member) => member.user.id === field.value)?.user.name ??
+                            "Responsável")
                           : "Sem responsável"}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value={EMPTY}>Sem responsável</SelectItem>
                       {members.map((member) => (
-                        <SelectItem key={member.user.id} value={member.user.id}>{member.user.name}</SelectItem>
+                        <SelectItem key={member.user.id} value={member.user.id}>
+                          {member.user.name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -265,7 +317,9 @@ export function BoardTaskFormDialog({
               />
             </SelectField>
             <fieldset className="space-y-2">
-              <legend className="text-label-sm tracking-wider text-muted-foreground">Etiquetas</legend>
+              <legend className="text-label-sm tracking-wider text-muted-foreground">
+                Etiquetas
+              </legend>
               {tags.length ? (
                 <Controller
                   control={form.control}
@@ -278,19 +332,35 @@ export function BoardTaskFormDialog({
                           <button
                             type="button"
                             key={tag.id}
-                            onClick={() => field.onChange(selected ? field.value.filter((id) => id !== tag.id) : [...field.value, tag.id])}
-                            className={cn("flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-label-sm", selected && "border-primary bg-primary/10")}
+                            onClick={() =>
+                              field.onChange(
+                                selected
+                                  ? field.value.filter((id) => id !== tag.id)
+                                  : [...field.value, tag.id],
+                              )
+                            }
+                            className={cn(
+                              "flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-label-sm",
+                              selected && "border-primary bg-primary/10",
+                            )}
                             aria-pressed={selected}
                           >
-                            <span className="size-2 rounded-full" style={{ backgroundColor: tag.color }} aria-hidden />
-                            {tag.name}{selected ? <Check className="size-3" aria-hidden /> : null}
+                            <span
+                              className="size-2 rounded-full"
+                              style={{ backgroundColor: tag.color }}
+                              aria-hidden
+                            />
+                            {tag.name}
+                            {selected ? <Check className="size-3" aria-hidden /> : null}
                           </button>
                         );
                       })}
                     </div>
                   )}
                 />
-              ) : <p className="text-body-sm text-muted-foreground">Nenhuma tag disponível.</p>}
+              ) : (
+                <p className="text-body-sm text-muted-foreground">Nenhuma tag disponível.</p>
+              )}
             </fieldset>
           </aside>
         </form>

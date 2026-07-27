@@ -57,3 +57,45 @@ export function ThemeToggle() {
     </DropdownMenu>
   );
 }
+
+export function ThemeButton() {
+  const { theme, setTheme } = useTheme();
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  );
+  const currentTheme = mounted ? theme : "system";
+  const CurrentIcon = themes.find(({ value }) => value === currentTheme)?.icon ?? Laptop;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant="ghost"
+            className="h-10 w-full justify-start gap-4 px-1"
+            aria-label="Alterar tema"
+          />
+        }
+      >
+        <span className="grid size-8 shrink-0 place-items-center">
+          <CurrentIcon aria-hidden="true" />
+        </span>
+        <span className="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
+          Alterar Tema
+        </span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="right" align="start" className="w-40">
+        <DropdownMenuLabel>Tema</DropdownMenuLabel>
+        {themes.map(({ value, label, icon: Icon }) => (
+          <DropdownMenuItem key={value} onClick={() => setTheme(value)}>
+            <Icon aria-hidden="true" />
+            {label}
+            {currentTheme === value && <Check className="ml-auto" aria-hidden="true" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

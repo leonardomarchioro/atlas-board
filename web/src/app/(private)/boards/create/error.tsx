@@ -2,15 +2,13 @@
 
 import { ArrowLeft, RotateCcw, TriangleAlert } from "lucide-react";
 import Link from "next/link";
-import { AppHeader } from "@/components/layout/app-header";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export default function CreateBoardError({ reset }: { reset: () => void }) {
   return (
     <div className="min-h-screen bg-background">
-      <AppHeader section="Criar Board" />
-      <main className="atlas-container grid min-h-screen place-items-center py-24">
+      <main className="atlas-container grid min-h-screen place-items-center py-8">
         <section className="w-full max-w-lg rounded-xl border bg-card p-8 text-center shadow-overlay">
           <span className="mx-auto mb-5 grid size-12 place-items-center rounded-full bg-destructive/10 text-destructive">
             <TriangleAlert aria-hidden />

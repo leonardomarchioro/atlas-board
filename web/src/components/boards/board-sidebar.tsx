@@ -1,5 +1,8 @@
-import { CircleHelp, LayoutDashboard, PanelsTopLeft, Settings, View } from "lucide-react";
+import { LayoutDashboard, PanelsTopLeft, Settings, View } from "lucide-react";
 import Link from "next/link";
+import { BrandMark } from "@/components/brand-mark";
+import { UserMenu } from "@/components/layout/user-menu";
+import { ThemeButton } from "@/components/theme/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import type { BoardSummary } from "@/features/boards/types/board.types";
 
@@ -12,9 +15,21 @@ export function BoardSidebar({
 }) {
   return (
     <aside
-      className="group/sidebar hidden h-[calc(100vh-4.5rem)] w-16 shrink-0 overflow-hidden border-r bg-surface-low transition-[width] duration-300 hover:w-60 md:flex md:flex-col"
+      className="group/sidebar hidden h-screen w-16 shrink-0 overflow-hidden border-r bg-surface-low transition-[width] duration-300 hover:w-60 md:flex md:flex-col"
       aria-label="Navegação interna"
     >
+      <div className="flex h-18 shrink-0 items-center border-b px-4">
+        <Link
+          href="/dashboard"
+          className="block w-max rounded-sm focus-visible:outline-2 focus-visible:outline-ring"
+          aria-label="Atlas — Dashboard"
+        >
+          <BrandMark
+            size="sm"
+            className="[&>span:last-child]:invisible [&>span:last-child]:opacity-0 [&>span:last-child]:transition-opacity group-hover/sidebar:[&>span:last-child]:visible group-hover/sidebar:[&>span:last-child]:opacity-100"
+          />
+        </Link>
+      </div>
       <nav className="flex flex-col gap-1 p-3">
         <Link
           href="/dashboard"
@@ -25,25 +40,10 @@ export function BoardSidebar({
             Dashboard
           </span>
         </Link>
-        <span className="flex h-10 items-center gap-4 rounded-md bg-accent px-2 text-accent-foreground">
-          <View className="size-5 shrink-0" aria-hidden />
-          <span className="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
-            Boards
-          </span>
-        </span>
-        <button
-          disabled
-          className="flex h-10 items-center gap-4 rounded-md px-2 text-muted-foreground opacity-60"
-        >
-          <Settings className="size-5 shrink-0" aria-hidden />
-          <span className="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
-            Configurações
-          </span>
-        </button>
       </nav>
       <div className="mx-4 border-t" />
-      <div className="min-h-0 flex-1 overflow-y-auto p-3">
-        <p className="px-2 py-2 font-label text-[10px] font-bold uppercase tracking-wider text-muted-foreground opacity-0 group-hover/sidebar:opacity-100">
+      <div className="min-h-0 flex-1 overflow-hidden p-3 group-hover/sidebar:overflow-y-auto">
+        <p className="h-8 whitespace-nowrap px-2 py-2 font-label text-[10px] font-bold uppercase tracking-wider text-muted-foreground opacity-0 transition-opacity group-hover/sidebar:opacity-100">
           Meus boards
         </p>
         {boards.map((board) => (
@@ -60,21 +60,16 @@ export function BoardSidebar({
             </span>
             <Badge
               variant={board.role === "ADMIN" ? "info" : "secondary"}
-              className="hidden shrink-0 text-[9px] group-hover/sidebar:flex"
+              className="hidden shrink-0 text-[9px] group-hover/sidebar:flex normal-case"
             >
-              {board.role === "ADMIN" ? "ADMIN" : "COLAB"}
+              {board.role === "ADMIN" ? "Admin" : "Colab"}
             </Badge>
           </Link>
         ))}
       </div>
-      <div className="border-t p-3">
-        <button
-          disabled
-          className="flex h-10 items-center gap-4 px-2 text-muted-foreground opacity-60"
-        >
-          <CircleHelp className="size-5 shrink-0" aria-hidden />
-          <span className="opacity-0 group-hover/sidebar:opacity-100">Ajuda</span>
-        </button>
+      <div className="border-t p-3 flex flex-col gap-2">
+        <ThemeButton />
+        <UserMenu compact />
       </div>
     </aside>
   );

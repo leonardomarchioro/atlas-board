@@ -13,7 +13,6 @@ import { BoardColumnsStep } from "@/components/boards/create/board-columns-step"
 import { BoardMembersStep } from "@/components/boards/create/board-members-step";
 import { BoardReviewStep } from "@/components/boards/create/board-review-step";
 import { CreateBoardProgress } from "@/components/boards/create/create-board-progress";
-import { AppHeader } from "@/components/layout/app-header";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -166,8 +165,7 @@ export function CreateBoardWizard() {
 
   return (
     <div className="min-h-screen bg-background">
-      <AppHeader section="Criar Board" />
-      <main className="atlas-container flex min-h-screen items-start justify-center pb-8 pt-24 sm:items-center sm:py-24">
+      <main className="atlas-container flex min-h-screen items-start justify-center py-8 sm:items-center">
         <div className="w-full max-w-3xl overflow-hidden rounded-xl border bg-card shadow-overlay">
           <div className="border-b px-4 py-5 sm:px-6">
             <div className="mb-5 flex items-center justify-between gap-4">

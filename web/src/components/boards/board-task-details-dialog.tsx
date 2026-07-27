@@ -58,6 +58,7 @@ import type {
   TaskTag,
 } from "@/features/tasks/types/task.types";
 import { useAuth } from "@/providers/auth-provider";
+import { formatRelativeDate } from "@/lib/date";
 
 const priorityLabels: Record<TaskPriority, string> = {
   LOW: "Baixa",
@@ -91,7 +92,7 @@ export function BoardTaskDetailsDialog({
   const comments = useTaskComments(taskId);
   return (
     <Dialog open={Boolean(taskId)} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="h-[100dvh] max-h-none max-w-none gap-0 overflow-hidden rounded-none bg-background p-0 sm:h-[92vh] sm:max-w-[1200px] sm:rounded-xl">
+      <DialogContent className="h-[100dvh] max-h-none max-w-none gap-0 overflow-hidden rounded-none bg-background p-0 sm:h-auto sm:max-h-[92vh] sm:max-w-[1200px] sm:rounded-xl">
         {query.isPending ? (
           <TaskSkeleton />
         ) : query.isError ? (
@@ -149,7 +150,7 @@ function TaskWorkspace({
     }
   }
   return (
-    <>
+    <div className="flex h-full min-h-0 flex-col sm:h-auto sm:max-h-[92vh]">
       <DialogHeader className="shrink-0 border-b px-5 py-5 pr-14 sm:px-8 sm:py-6">
         <nav
           className="mb-4 flex items-center gap-2 font-label text-label-sm text-muted-foreground"
@@ -259,7 +260,7 @@ function TaskWorkspace({
           move={move}
         />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -738,7 +739,10 @@ function CommentItem({
         <div className="flex flex-wrap items-center gap-2">
           <strong>{comment.author.name}</strong>
           <span className="text-label-sm text-muted-foreground">
-            {formatDate(comment.createdAt)}
+            {formatRelativeDate(comment.createdAt, {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
             {comment.isEdited ? " · editado" : ""}
           </span>
         </div>
