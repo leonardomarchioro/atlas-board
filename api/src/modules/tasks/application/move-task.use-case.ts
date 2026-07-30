@@ -7,6 +7,7 @@ import {
   taskDetailsSelect,
 } from "../presentation/selects/task-details.select";
 import { TaskAccessService } from "../services/task-access.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 export interface MoveTaskInput {
   taskId: string;
   currentUserId: string;
@@ -18,6 +19,7 @@ export class MoveTaskUseCase implements UseCase<MoveTaskInput, TaskDetails> {
   constructor(
     private readonly prisma: PrismaService,
     private readonly access: TaskAccessService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
   async execute(input: MoveTaskInput): Promise<TaskDetails> {
     const task = await this.access.requireTaskAccess(
@@ -36,7 +38,7 @@ export class MoveTaskUseCase implements UseCase<MoveTaskInput, TaskDetails> {
         where: { id: task.id },
         select: taskDetailsSelect,
       });
-    return this.prisma.$transaction(async (tx) => {
+    const movedTask = await this.prisma.$transaction(async (tx) => {
       await tx.task.update({ where: { id: task.id }, data: { position: -1 } });
       if (input.columnId === task.columnId) {
         if (input.position < task.position) {
@@ -99,5 +101,12 @@ export class MoveTaskUseCase implements UseCase<MoveTaskInput, TaskDetails> {
         select: taskDetailsSelect,
       });
     });
+    await this.notifications.taskMoved({
+      actorUserId: input.currentUserId,
+      taskId: task.id,
+      fromColumnId: task.columnId,
+      toColumnId: input.columnId,
+    });
+    return movedTask;
   }
 }

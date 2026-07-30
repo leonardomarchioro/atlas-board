@@ -6,6 +6,7 @@ import { AppError } from "@shared/errors/app-error";
 import { ErrorCode } from "@shared/errors/error-codes";
 
 import { TaskAccessService } from "../../services/task-access.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 import {
   TaskCommentWithAuthor,
   taskCommentSelect,
@@ -25,6 +26,7 @@ export class CreateTaskCommentUseCase implements UseCase<
   constructor(
     private readonly prisma: PrismaService,
     private readonly access: TaskAccessService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
 
   async execute(input: CreateTaskCommentInput): Promise<TaskCommentWithAuthor> {
@@ -36,7 +38,7 @@ export class CreateTaskCommentUseCase implements UseCase<
         ErrorCode.VALIDATION_ERROR,
       );
     }
-    return this.prisma.taskComment.create({
+    const comment = await this.prisma.taskComment.create({
       data: {
         taskId: input.taskId,
         authorId: input.currentUserId,
@@ -44,5 +46,11 @@ export class CreateTaskCommentUseCase implements UseCase<
       },
       select: taskCommentSelect,
     });
+    await this.notifications.taskCommentCreated({
+      actorUserId: input.currentUserId,
+      taskId: input.taskId,
+      commentId: comment.id,
+    });
+    return comment;
   }
 }

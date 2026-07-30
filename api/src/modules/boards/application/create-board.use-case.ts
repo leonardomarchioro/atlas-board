@@ -5,6 +5,7 @@ import { PrismaService } from "@shared/database/prisma.service";
 import { AppError } from "@shared/errors/app-error";
 import { ErrorCode } from "@shared/errors/error-codes";
 import { InviteMailService } from "@shared/mail/invite-mail.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 import { InvitationTokenService } from "../invitations/services/invitation-token.service";
 import { BoardMustHaveColumnError } from "../errors/board-must-have-column.error";
 import {
@@ -23,7 +24,12 @@ export interface CreateBoardInput {
 
 type CreatedBoard = {
   board: BoardDetails;
-  invites: Array<{ email: string; token: string; inviteExpiresAt: Date }>;
+  invites: Array<{
+    id: string;
+    email: string;
+    token: string;
+    inviteExpiresAt: Date;
+  }>;
 };
 
 @Injectable()
@@ -37,6 +43,7 @@ export class CreateBoardUseCase implements UseCase<
     private readonly prisma: PrismaService,
     private readonly inviteMailService: InviteMailService,
     private readonly invitationTokens: InvitationTokenService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
 
   async execute(input: CreateBoardInput): Promise<BoardDetails> {
@@ -94,25 +101,48 @@ export class CreateBoardUseCase implements UseCase<
         await tx.boardColumn.createMany({
           data: columns.map((column) => ({ ...column, boardId: board.id })),
         });
-        if (invites.length > 0) {
-          await tx.boardMember.createMany({
-            data: invites.map((invite) => ({
-              email: invite.email,
-              inviteTokenHash: invite.tokenHash,
-              inviteExpiresAt: invite.inviteExpiresAt,
-              boardId: board.id,
-              role: "COLLABORATOR",
-              status: "PENDING",
-            })),
-          });
-        }
+        const createdInvites = await Promise.all(
+          invites.map(async (invite) => {
+            const member = await tx.boardMember.create({
+              data: {
+                email: invite.email,
+                inviteTokenHash: invite.tokenHash,
+                inviteExpiresAt: invite.inviteExpiresAt,
+                boardId: board.id,
+                role: "COLLABORATOR",
+                status: "PENDING",
+              },
+              select: { id: true },
+            });
+            return { ...invite, id: member.id };
+          }),
+        );
         const details = await tx.board.findUniqueOrThrow({
           where: { id: board.id },
           select: boardDetailsSelect,
         });
-        return { board: details, invites };
+        return { board: details, invites: createdInvites };
       },
     );
+
+    const invitedUsers = await this.prisma.user.findMany({
+      where: { email: { in: created.invites.map(({ email }) => email) } },
+      select: { id: true, email: true },
+    });
+    const userByEmail = new Map(
+      invitedUsers.map((user) => [user.email, user.id]),
+    );
+    for (const invite of created.invites) {
+      const recipientUserId = userByEmail.get(invite.email);
+      if (!recipientUserId) continue;
+      await this.notifications.boardInvitation({
+        recipientUserId,
+        actorUserId: input.userId,
+        boardId: created.board.id,
+        boardName: created.board.name,
+        invitationId: invite.id,
+      });
+    }
 
     const results = await Promise.allSettled(
       created.invites.map((invite) =>

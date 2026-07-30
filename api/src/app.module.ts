@@ -6,6 +6,7 @@ import { BoardsModule } from "@modules/boards/boards.module";
 import { UsersModule } from "@modules/users/users.module";
 import { TasksModule } from "@modules/tasks/tasks.module";
 import { PrismaModule } from "@shared/database/prisma.module";
+import { NotificationsModule } from "@modules/notifications/notifications.module";
 
 const requiredEnvironmentVariables = [
   "FRONTEND_URL",
@@ -38,6 +39,7 @@ function validateEnvironment(
     AuthModule,
     BoardsModule,
     TasksModule,
+    NotificationsModule,
   ],
   controllers: [],
   providers: [],

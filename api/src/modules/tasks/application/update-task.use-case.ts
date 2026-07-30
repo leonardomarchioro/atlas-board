@@ -9,6 +9,7 @@ import {
   taskDetailsSelect,
 } from "../presentation/selects/task-details.select";
 import { TaskAccessService } from "../services/task-access.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 export interface UpdateTaskInput {
   taskId: string;
   currentUserId: string;
@@ -27,12 +28,20 @@ export class UpdateTaskUseCase implements UseCase<
   constructor(
     private readonly prisma: PrismaService,
     private readonly access: TaskAccessService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
   async execute(input: UpdateTaskInput): Promise<TaskDetails> {
     const task = await this.access.requireTaskAccess(
       input.taskId,
       input.currentUserId,
     );
+    const previous = await this.prisma.task.findUniqueOrThrow({
+      where: { id: input.taskId },
+      select: {
+        assigneeId: true,
+        sharedWith: { select: { userId: true } },
+      },
+    });
     if (input.title !== undefined && !input.title.trim())
       throw new AppError(
         "O título da tarefa não pode ser vazio.",
@@ -44,7 +53,7 @@ export class UpdateTaskUseCase implements UseCase<
       input.tagIds === undefined
         ? undefined
         : await this.access.requireTags(task.boardId, input.tagIds);
-    return this.prisma.$transaction(async (tx) => {
+    const updatedTask = await this.prisma.$transaction(async (tx) => {
       const data: Prisma.TaskUpdateInput = {};
       if (input.title !== undefined) data.title = input.title.trim();
       if (input.description !== undefined)
@@ -68,5 +77,19 @@ export class UpdateTaskUseCase implements UseCase<
         select: taskDetailsSelect,
       });
     });
+    if (
+      input.assigneeId &&
+      input.assigneeId !== previous.assigneeId &&
+      !previous.sharedWith.some(({ userId }) => userId === input.assigneeId)
+    ) {
+      await this.notifications.taskAssigned({
+        recipientUserIds: [input.assigneeId],
+        actorUserId: input.currentUserId,
+        boardId: updatedTask.boardId,
+        taskId: updatedTask.id,
+        taskTitle: updatedTask.title,
+      });
+    }
+    return updatedTask;
   }
 }

@@ -6,6 +6,7 @@ import {
   taskDetailsSelect,
 } from "../presentation/selects/task-details.select";
 import { TaskAccessService } from "../services/task-access.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 export interface UpdateTaskSharedUsersInput {
   taskId: string;
   currentUserId: string;
@@ -19,6 +20,7 @@ export class UpdateTaskSharedUsersUseCase implements UseCase<
   constructor(
     private readonly prisma: PrismaService,
     private readonly access: TaskAccessService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
   async execute(input: UpdateTaskSharedUsersInput): Promise<TaskDetails> {
     const task = await this.access.requireTaskAccess(
@@ -29,7 +31,19 @@ export class UpdateTaskSharedUsersUseCase implements UseCase<
       task.boardId,
       input.sharedUserIds,
     );
-    return this.prisma.$transaction(async (tx) => {
+    const previous = await this.prisma.task.findUniqueOrThrow({
+      where: { id: input.taskId },
+      select: {
+        assigneeId: true,
+        sharedWith: { select: { userId: true } },
+      },
+    });
+    const previousIds = new Set([
+      ...(previous.assigneeId ? [previous.assigneeId] : []),
+      ...previous.sharedWith.map(({ userId }) => userId),
+    ]);
+    const newAssigneeIds = ids.filter((userId) => !previousIds.has(userId));
+    const updatedTask = await this.prisma.$transaction(async (tx) => {
       await tx.taskSharedUser.deleteMany({ where: { taskId: input.taskId } });
       if (ids.length)
         await tx.taskSharedUser.createMany({
@@ -40,5 +54,13 @@ export class UpdateTaskSharedUsersUseCase implements UseCase<
         select: taskDetailsSelect,
       });
     });
+    await this.notifications.taskAssigned({
+      recipientUserIds: newAssigneeIds,
+      actorUserId: input.currentUserId,
+      boardId: updatedTask.boardId,
+      taskId: updatedTask.id,
+      taskTitle: updatedTask.title,
+    });
+    return updatedTask;
   }
 }

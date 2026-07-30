@@ -2,6 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { UseCase } from "@shared/application/use-case.interface";
 import { PrismaService } from "@shared/database/prisma.service";
 import { InviteMailService } from "@shared/mail/invite-mail.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 import { BoardAccessService } from "../../services/board-access.service";
 import {
   BoardMemberView,
@@ -31,6 +32,7 @@ export class InviteBoardMemberUseCase implements UseCase<
     private readonly access: BoardAccessService,
     private readonly tokens: InvitationTokenService,
     private readonly mail: InviteMailService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
 
   async execute(input: InviteBoardMemberInput): Promise<BoardMemberView> {
@@ -93,6 +95,20 @@ export class InviteBoardMemberUseCase implements UseCase<
           },
           select: boardMemberSelect,
         });
+
+    const invitedUser = await this.prisma.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
+    if (invitedUser) {
+      await this.notifications.boardInvitation({
+        recipientUserId: invitedUser.id,
+        actorUserId: input.currentUserId,
+        boardId: board.id,
+        boardName: board.name,
+        invitationId: member.id,
+      });
+    }
 
     try {
       await this.mail.sendInvite({

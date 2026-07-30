@@ -9,6 +9,7 @@ import {
   taskDetailsSelect,
 } from "../presentation/selects/task-details.select";
 import { TaskAccessService } from "../services/task-access.service";
+import { DomainNotificationsService } from "@modules/notifications/application/domain-notifications.service";
 
 export interface CreateTaskInput {
   boardId: string;
@@ -32,6 +33,7 @@ export class CreateTaskUseCase implements UseCase<
   constructor(
     private readonly prisma: PrismaService,
     private readonly access: TaskAccessService,
+    private readonly notifications: DomainNotificationsService,
   ) {}
   async execute(input: CreateTaskInput): Promise<TaskDetails> {
     await this.access.requireBoardAccess(input.boardId, input.currentUserId);
@@ -59,7 +61,7 @@ export class CreateTaskUseCase implements UseCase<
       input.tagIds ?? [],
     );
 
-    return this.prisma.$transaction(async (tx) => {
+    const task = await this.prisma.$transaction(async (tx) => {
       const last = await tx.task.findFirst({
         where: { columnId: input.columnId },
         orderBy: { position: "desc" },
@@ -96,5 +98,16 @@ export class CreateTaskUseCase implements UseCase<
         select: taskDetailsSelect,
       });
     });
+    await this.notifications.taskAssigned({
+      recipientUserIds: [
+        ...(input.assigneeId ? [input.assigneeId] : []),
+        ...sharedUserIds,
+      ],
+      actorUserId: input.currentUserId,
+      boardId: task.boardId,
+      taskId: task.id,
+      taskTitle: task.title,
+    });
+    return task;
   }
 }

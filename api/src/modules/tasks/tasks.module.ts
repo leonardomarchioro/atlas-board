@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { BoardsModule } from "@modules/boards/boards.module";
+import { NotificationsModule } from "@modules/notifications/notifications.module";
 import { AddChecklistItemUseCase } from "./application/add-checklist-item.use-case";
 import { CreateTagUseCase } from "./application/create-tag.use-case";
 import { CreateTaskUseCase } from "./application/create-task.use-case";
@@ -25,7 +26,7 @@ import { TasksController } from "./presentation/tasks.controller";
 import { TaskAccessService } from "./services/task-access.service";
 
 @Module({
-  imports: [BoardsModule],
+  imports: [BoardsModule, NotificationsModule],
   controllers: [TasksController, TaskCommentsController],
   providers: [
     TaskAccessService,

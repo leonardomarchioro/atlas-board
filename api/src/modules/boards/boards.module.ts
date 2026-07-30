@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { NotificationsModule } from "@modules/notifications/notifications.module";
 
 import { InviteMailService } from "@shared/mail/invite-mail.service";
 import { MockInviteMailService } from "@shared/mail/mock-invite-mail.service";
@@ -25,6 +26,7 @@ import { BoardColumnsController } from "./presentation/board-columns.controller"
 import { BoardAccessService } from "./services/board-access.service";
 
 @Module({
+  imports: [NotificationsModule],
   controllers: [
     BoardsController,
     BoardColumnsController,
