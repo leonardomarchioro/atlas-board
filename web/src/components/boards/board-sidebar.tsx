@@ -2,6 +2,7 @@ import { LayoutDashboard, PanelsTopLeft, Settings, View } from "lucide-react";
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { UserMenu } from "@/components/layout/user-menu";
+import { NotificationTrigger } from "@/components/notifications/notification-trigger";
 import { ThemeButton } from "@/components/theme/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import type { BoardSummary } from "@/features/boards/types/board.types";
@@ -69,6 +70,7 @@ export function BoardSidebar({
       </div>
       <div className="border-t p-3 flex flex-col gap-2">
         <ThemeButton />
+        <NotificationTrigger sidebar />
         <UserMenu compact />
       </div>
     </aside>

@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { UserMenu } from "@/components/layout/user-menu";
+import { NotificationTrigger } from "@/components/notifications/notification-trigger";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Input } from "@/components/ui/input";
 
@@ -68,6 +69,7 @@ export function AppHeader({
           </div>
         ) : null}
         <div className="flex shrink-0 items-center gap-2">
+          <NotificationTrigger />
           <ThemeToggle />
           <UserMenu />
         </div>

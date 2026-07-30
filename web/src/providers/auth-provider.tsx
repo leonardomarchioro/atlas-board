@@ -9,6 +9,7 @@ import {
   useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -20,6 +21,7 @@ import { getSafeRedirect } from "@/features/auth/utils/safe-redirect";
 
 interface AuthContextValue {
   user: AuthUser | null;
+  accessToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   setSession: (session: AuthResponse) => void;
@@ -32,6 +34,11 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const accessToken = useSyncExternalStore(
+    authStorage.subscribe,
+    authStorage.getAccessToken,
+    () => null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -39,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const clearSession = useCallback(() => {
     authStorage.clear();
     setUser(null);
-    queryClient.removeQueries({ queryKey: authKeys.all });
+    queryClient.removeQueries();
   }, [queryClient]);
 
   const refreshUser = useCallback(async () => {
@@ -90,6 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       user,
+      accessToken,
       isAuthenticated: Boolean(user),
       isLoading,
       setSession,
@@ -97,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       refreshUser,
       logout,
     }),
-    [user, isLoading, setSession, clearSession, refreshUser, logout],
+    [user, accessToken, isLoading, setSession, clearSession, refreshUser, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

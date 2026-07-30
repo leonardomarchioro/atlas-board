@@ -16,7 +16,10 @@ import { ReorderBoardColumnsUseCase } from "./application/reorder-board-columns.
 import { UpdateBoardUseCase } from "./application/update-board.use-case";
 import { UpdateBoardColumnUseCase } from "./application/update-board-column.use-case";
 import { AcceptBoardInvitationUseCase } from "./invitations/application/accept-board-invitation.use-case";
+import { AcceptAuthenticatedBoardInvitationUseCase } from "./invitations/application/accept-authenticated-board-invitation.use-case";
+import { BoardInvitationAcceptanceService } from "./invitations/application/board-invitation-acceptance.service";
 import { GetBoardInvitationUseCase } from "./invitations/application/get-board-invitation.use-case";
+import { GetAuthenticatedBoardInvitationUseCase } from "./invitations/application/get-authenticated-board-invitation.use-case";
 import { InviteBoardMemberUseCase } from "./invitations/application/invite-board-member.use-case";
 import { BoardInvitationsController } from "./invitations/presentation/board-invitations.controller";
 import { CryptoInvitationTokenService } from "./invitations/services/crypto-invitation-token.service";
@@ -42,7 +45,10 @@ import { BoardAccessService } from "./services/board-access.service";
     RemoveBoardMemberUseCase,
     BoardAccessService,
     GetBoardInvitationUseCase,
+    GetAuthenticatedBoardInvitationUseCase,
     AcceptBoardInvitationUseCase,
+    AcceptAuthenticatedBoardInvitationUseCase,
+    BoardInvitationAcceptanceService,
     InviteBoardMemberUseCase,
     ListBoardColumnsUseCase,
     CreateBoardColumnUseCase,

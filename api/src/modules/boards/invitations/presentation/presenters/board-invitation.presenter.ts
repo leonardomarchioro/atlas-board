@@ -1,6 +1,33 @@
 import type { BoardInvitationDetails } from "../selects/board-invitation.select";
 
 export class BoardInvitationPresenter {
+  static toAuthenticatedHTTP(invitation: BoardInvitationDetails) {
+    const isExpired =
+      invitation.inviteExpiresAt !== null &&
+      invitation.inviteExpiresAt.getTime() <= Date.now();
+    return {
+      id: invitation.id,
+      board: {
+        id: invitation.board.id,
+        name: invitation.board.name,
+        description: invitation.board.description,
+      },
+      email: invitation.email,
+      role: invitation.role,
+      status: invitation.status,
+      invitedBy: invitation.board.createdBy,
+      createdAt: invitation.createdAt,
+      expiresAt: invitation.inviteExpiresAt,
+      acceptedAt: invitation.acceptedAt,
+      isExpired,
+      canAccept:
+        invitation.status === "PENDING" &&
+        invitation.userId === null &&
+        invitation.inviteExpiresAt !== null &&
+        !isExpired,
+    };
+  }
+
   static toHTTP(invitation: BoardInvitationDetails) {
     const isExpired =
       invitation.inviteExpiresAt !== null &&

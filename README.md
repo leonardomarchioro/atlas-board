@@ -52,17 +52,3 @@ Este projeto tem como principais objetivos:
 ## 🚧 Status
 
 O projeto está em desenvolvimento e novas funcionalidades serão adicionadas conforme sua evolução.
-
-
-## TODO:
-
-1. Finalizar comentários no backend - OK
-2. Implementar aceite de convites - Ok
-3. Integrar criação/edição de boards no frontend
-4. Implementar o Kanban
-5. Integrar criação e edição de tarefas
-6. Integrar detalhes, checklist, tags e comentários
-7. Implementar perfil do usuário
-8. Adicionar WebSocket
-9. Criar testes
-10. Melhorar segurança, documentação e deploy

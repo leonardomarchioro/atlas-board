@@ -8,6 +8,7 @@ export const boardInvitationSelect = {
   userId: true,
   inviteExpiresAt: true,
   acceptedAt: true,
+  createdAt: true,
   board: {
     select: {
       id: true,

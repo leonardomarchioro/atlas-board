@@ -81,6 +81,10 @@
         {
             "key": "notificationId",
             "value": ""
+        },
+        {
+            "key": "invitationId",
+            "value": ""
         }
     ],
     "item": [
@@ -830,6 +834,62 @@
                         "description": "Aceita o convite usando o usuário autenticado. Não envie body. Retorna board e membership ativa. Possíveis respostas: 401 sem sessão, 403 e-mail incompatível, 404 token indisponível, 409 convite aceito/usuário já membro e 410 convite expirado."
                     },
                     "response": []
+                },
+                {
+                    "name": "Get Authenticated Board Invitation",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/board-invitations/{{invitationId}}/authenticated",
+                            "host": ["{{baseUrl}}"],
+                            "path": [
+                                "board-invitations",
+                                "{{invitationId}}",
+                                "authenticated"
+                            ]
+                        },
+                        "description": "Consulta por UUID um convite pertencente ao usuário autenticado. Não retorna token nem hash. Retorna 404 quando o convite não existe ou pertence a outro usuário."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Accept Authenticated Board Invitation",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{accessToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": null,
+                        "url": {
+                            "raw": "{{baseUrl}}/board-invitations/{{invitationId}}/accept-authenticated",
+                            "host": ["{{baseUrl}}"],
+                            "path": [
+                                "board-invitations",
+                                "{{invitationId}}",
+                                "accept-authenticated"
+                            ]
+                        },
+                        "description": "Aceita explicitamente o convite pelo UUID usando somente a identidade do JWT. Não exige body ou token de convite. É idempotente quando o vínculo já está ativo para o mesmo usuário."
+                    },
+                    "response": []
                 }
             ]
         },
@@ -1410,6 +1470,10 @@
                                     "const notification = body.data?.[0];",
                                     "if (notification?.id) {",
                                     "  pm.collectionVariables.set('notificationId', notification.id);",
+                                    "}",
+                                    "const invitation = body.data?.find((item) => item.type === 'BOARD_INVITATION_RECEIVED');",
+                                    "if (typeof invitation?.data?.invitationId === 'string') {",
+                                    "  pm.collectionVariables.set('invitationId', invitation.data.invitationId);",
                                     "}"
                                 ]
                             }

@@ -31,3 +31,17 @@ export interface AcceptBoardInvitationResponse {
     acceptedAt: string;
   };
 }
+
+export interface AuthenticatedBoardInvitationResponse {
+  id: string;
+  board: { id: string; name: string; description: string | null };
+  email: string;
+  role: "COLLABORATOR";
+  status: "PENDING" | "ACTIVE";
+  invitedBy: InvitationPerson;
+  createdAt: string;
+  expiresAt: string | null;
+  acceptedAt: string | null;
+  isExpired: boolean;
+  canAccept: boolean;
+}
